@@ -30,15 +30,15 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. The skeleton overlay renders on the camera feed and can be toggled on and off independently of the detection state indicator
   5. Session history shows all holds from the session (skill, duration, date, camera) and the personal best per skill is tracked and updated correctly
   6. A video can be imported from the camera roll and the detection pipeline runs against it, producing a console or debug view showing detected holds and timestamps — no clip review UX required at this stage
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
-- [ ] 01-01: Project scaffolding, CameraActor, AVCaptureSession, PreviewLayer
-- [ ] 01-02: PoseDetector, HandstandClassifier, HoldStateMachine
-- [ ] 01-03: SessionCoordinator, HoldTimer, haptic/audio alert, target duration UI
-- [ ] 01-04: SkeletonRenderer, detection state overlay, toggle controls
-- [ ] 01-05: SwiftData schema (Session, Hold, SkillPersonalBest), history log view
-- [ ] 01-06: VideoFrameReader (AVAssetReader), video import entry point, debug output of detected holds and timestamps
+- [ ] 01-01-PLAN.md — Project scaffolding, CameraActor global actor, CameraManager, CameraPreviewView, session screen shell
+- [ ] 01-02-PLAN.md — PoseDetector, HandstandClassifier, HoldStateMachine (TDD — tested detection core)
+- [ ] 01-03-PLAN.md — SessionCoordinator, live timer (10Hz ContinuousClock), haptic/beep alert, HomeView, navigation
+- [ ] 01-04-PLAN.md — SkeletonRenderer (Canvas), DetectionStateOverlay (colored ring), independent toggles
+- [ ] 01-05-PLAN.md — SwiftData schema (Session, Hold, SkillPersonalBest), history log view, PB card on home
+- [ ] 01-06-PLAN.md — VideoFrameReader (AVAssetReader), PHPicker video import, debug hold list output
 
 ### Phase 2: Video Capture + Upload Mode
 **Goal**: Every hold attempt is automatically captured on video; athletes review each clip immediately after the hold ends and choose to keep or discard it; athletes can also import existing footage and receive the full review experience — trimmed clips per hold with keep/discard review — matching live mode output
