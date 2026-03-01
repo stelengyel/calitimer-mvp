@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-01T20:01:34.737Z"
+last_updated: "2026-03-01T20:07:44.322Z"
 progress:
   total_phases: 1
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -69,6 +69,8 @@ Recent decisions affecting current work:
 - [Phase 01-app-layout-navigation]: Custom Color extensions require explicit Color.textPrimary syntax — dot-shorthand fails in SwiftUI foregroundStyle() ShapeStyle context under Swift 6 strict concurrency
 - [Phase 01-app-layout-navigation]: Custom Color extensions require explicit Color.textPrimary syntax — dot-shorthand fails in SwiftUI foregroundStyle() under Swift 6 strict concurrency
 - [Phase 01-app-layout-navigation]: No @Environment(AppCoordinator) on non-navigating views (HistoryView, UploadModeView, SettingsView) — drawer and back button handle all navigation for those screens
+- [Phase 01-app-layout-navigation]: Conditional dim overlay (if coordinator.isDrawerOpen) required — always-present transparent overlay blocks NavigationStack swipe-back gesture
+- [Phase 01-app-layout-navigation]: DrawerView receives .environment(coordinator) separately as overlay — overlays outside NavigationStack do not inherit nav stack environment
 
 ### Pending Todos
 
