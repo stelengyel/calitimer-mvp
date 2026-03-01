@@ -10,7 +10,7 @@ CaliTimer ships in 9 phases ordered by dependency and risk. The first phase esta
 - Integer phases (1–9): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (created via /gsd:insert-phase, execute between surrounding integers)
 
-- [ ] **Phase 1: App Layout & Navigation** - Screen shells, tab/nav structure, navigation plumbing — no features, just a real app skeleton that builds and runs
+- [x] **Phase 1: App Layout & Navigation** - Screen shells, tab/nav structure, navigation plumbing — no features, just a real app skeleton that builds and runs
 - [ ] **Phase 2: Camera Setup + Session View** - Live camera feed in app, session start/end controls, front/rear camera switch
 - [ ] **Phase 3: Video Upload Shell** - PHPicker import, video playback UI scaffold (detection not wired yet)
 - [ ] **Phase 4: Pose Detection** - Vision framework running on live and uploaded frames, skeleton overlay rendered and toggleable
@@ -35,8 +35,8 @@ CaliTimer ships in 9 phases ordered by dependency and risk. The first phase esta
 
 Plans:
 - [x] 01-01-PLAN.md — Xcode project scaffold: AppCoordinator, brand system (BrandColors, BrandFonts, JetBrains Mono), empty SwiftData @Model scaffolds
-- [ ] 01-02-PLAN.md — Five screen shells: HomeView (ember hero), LiveSessionView (full-screen), HistoryView, UploadModeView (three-zone), SettingsView
-- [ ] 01-03-PLAN.md — DrawerView + full navigation wiring + human verify on simulator
+- [x] 01-02-PLAN.md — Five screen shells: HomeView (ember hero), LiveSessionView (full-screen), HistoryView, UploadModeView (three-zone), SettingsView
+- [x] 01-03-PLAN.md — DrawerView + full navigation wiring + human verify on simulator
 
 ### Phase 2: Camera Setup + Session View
 **Goal**: An athlete can open the app, start a session, see a live camera feed, switch between front and rear cameras, and end the session — the app is physically usable propped on a stand with no hands required
@@ -133,7 +133,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. App Layout & Navigation | 1/3 | In Progress|  |
+| 1. App Layout & Navigation | 3/3 | Complete | 2026-03-01 |
 | 2. Camera Setup + Session View | 0/TBD | Not started | - |
 | 3. Video Upload Shell | 0/TBD | Not started | - |
 | 4. Pose Detection | 0/TBD | Not started | - |
