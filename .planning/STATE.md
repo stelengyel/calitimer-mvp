@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-01T19:53:22.889Z"
+last_updated: "2026-03-01T20:01:34.737Z"
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -23,9 +23,9 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 ## Current Position
 
 Phase: 1 of 8 v1 phases (App Layout & Navigation)
-Plan: 1 of 6 in current phase
+Plan: 2 of 6 in current phase
 Status: In progress
-Last activity: 2026-03-01 — Plan 01-01 complete: Xcode project scaffold, AppCoordinator, brand system, SwiftData @Model scaffolds
+Last activity: 2026-03-01 — Plan 01-02 complete: Five SwiftUI screen shells — HomeView, LiveSessionView, HistoryView, UploadModeView, SettingsView
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -48,6 +48,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01-app-layout-navigation P01 | 18 | 2 tasks | 13 files |
+| Phase 01-app-layout-navigation P02 | 3 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -65,6 +66,9 @@ Recent decisions affecting current work:
 - [Phase 01-app-layout-navigation]: Used XcodeGen (project.yml) for Xcode project generation — reproducible and git-friendly vs binary pbxproj hand-editing
 - [Phase 01-app-layout-navigation]: JetBrains Mono PostScript names confirmed as JetBrainsMono-Regular and JetBrainsMono-Bold (v2.304)
 - [Phase 01-app-layout-navigation]: Empty @Model classes require explicit init() in Swift 6 — required by @Model macro, not optional
+- [Phase 01-app-layout-navigation]: Custom Color extensions require explicit Color.textPrimary syntax — dot-shorthand fails in SwiftUI foregroundStyle() ShapeStyle context under Swift 6 strict concurrency
+- [Phase 01-app-layout-navigation]: Custom Color extensions require explicit Color.textPrimary syntax — dot-shorthand fails in SwiftUI foregroundStyle() under Swift 6 strict concurrency
+- [Phase 01-app-layout-navigation]: No @Environment(AppCoordinator) on non-navigating views (HistoryView, UploadModeView, SettingsView) — drawer and back button handle all navigation for those screens
 
 ### Pending Todos
 
@@ -79,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-01
-Stopped at: Completed 01-app-layout-navigation/01-01-PLAN.md — Xcode project scaffold, AppCoordinator, brand system, SwiftData @Model scaffolds
+Last session: 2026-03-01 (01-02 complete)
+Stopped at: Completed 01-app-layout-navigation/01-02-PLAN.md — Five SwiftUI screen shells (HomeView, LiveSessionView, HistoryView, UploadModeView, SettingsView)
 Resume file: None
