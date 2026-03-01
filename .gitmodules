@@ -1,0 +1,3 @@
+[submodule "design-assets"]
+	path = design-assets
+	url = https://github.com/stelengyel/calitimer-design-assets.git
