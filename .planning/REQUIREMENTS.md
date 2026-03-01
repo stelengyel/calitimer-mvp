@@ -92,23 +92,30 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CAMR-02 | Phase 1 | Pending |
 | SESS-01 | Phase 1 | Pending |
 | SESS-02 | Phase 1 | Pending |
+| HIST-01 | Phase 1 | Pending |
+| HIST-02 | Phase 1 | Pending |
+| VIDU-01 | Phase 1 | Pending |
+| VIDU-02 | Phase 1 | Pending |
 | VIDL-01 | Phase 2 | Pending |
 | VIDL-02 | Phase 2 | Pending |
 | VIDL-03 | Phase 2 | Pending |
-| VIDU-01 | Phase 2 | Pending |
-| VIDU-02 | Phase 2 | Pending |
 | VIDU-03 | Phase 2 | Pending |
-| HIST-01 | Phase 1 | Pending |
-| HIST-02 | Phase 1 | Pending |
 | ROBU-01 | Phase 3 | Pending |
 | ROBU-02 | Phase 3 | Pending |
 | ROBU-03 | Phase 3 | Pending |
+| SKIL-01 | Phase 4 (v2) | Pending |
+| SKIL-02 | Phase 4 (v2) | Pending |
+| SKIL-03 | Phase 4 (v2) | Pending |
+| SKIL-04 | Phase 4 (v2) | Pending |
+| SKIL-05 | Phase 4 (v2) | Pending |
+| ANLT-01 | Phase 4 (v2) | Pending |
 
 **Coverage:**
 - v1 requirements: 22 total
 - Mapped to phases: 22
 - Unmapped: 0 ✓
+- v2 requirements: 6 total (mapped to Phase 4, gated on Phase 1 accuracy validation)
 
 ---
 *Requirements defined: 2026-03-01*
-*Last updated: 2026-03-01 after initial definition*
+*Last updated: 2026-03-01 after roadmap revision (VIDU-01, VIDU-02 moved Phase 2 → Phase 1)*
