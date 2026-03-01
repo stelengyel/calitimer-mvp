@@ -1,0 +1,437 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3596F820A12E90EB45518F3A /* BrandColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C9F76F23D3372B00BAB94D /* BrandColors.swift */; };
+		39EF44E01074F5ED99976E4D /* BrandFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529E9BE3E0C0E92F0C70936 /* BrandFonts.swift */; };
+		3F4261D84FEBC9224D008629 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5616339FAD517735EA760A3E /* AppCoordinator.swift */; };
+		580B91029C9F5D08AD4D9B44 /* CaliTimerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B3A3F4FA9E917010EF0D7 /* CaliTimerApp.swift */; };
+		691DD6DF6EBDB23FE85D4A99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 515D92EC8A55029DB719BC95 /* Assets.xcassets */; };
+		6FC1B68A4E39AB8F7D216F3C /* Hold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AEA216E1F1B56194159D39 /* Hold.swift */; };
+		8F4A89813C60EDE02FD15E3E /* SkillPersonalBest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CE6930C77358EF084B69A /* SkillPersonalBest.swift */; };
+		9F80E9C60D58E7106C15B052 /* JetBrainsMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 731BC575082FE8FCE9950A8D /* JetBrainsMono-Bold.ttf */; };
+		A72B51F79D887D9670EBE0D1 /* JetBrainsMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8DA22A5089AFF4237419854 /* JetBrainsMono-Regular.ttf */; };
+		F25191481468DC369344B4D1 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6132500F8FFFA834A570BD /* Session.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0A7CE6930C77358EF084B69A /* SkillPersonalBest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillPersonalBest.swift; sourceTree = "<group>"; };
+		25F59B64677742565EE7B124 /* CaliTimer.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CaliTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E1B651E95750212F3AA3E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		515D92EC8A55029DB719BC95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5616339FAD517735EA760A3E /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		731BC575082FE8FCE9950A8D /* JetBrainsMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Bold.ttf"; sourceTree = "<group>"; };
+		82AEA216E1F1B56194159D39 /* Hold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hold.swift; sourceTree = "<group>"; };
+		8D6132500F8FFFA834A570BD /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		8F2B3A3F4FA9E917010EF0D7 /* CaliTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaliTimerApp.swift; sourceTree = "<group>"; };
+		96C9F76F23D3372B00BAB94D /* BrandColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandColors.swift; sourceTree = "<group>"; };
+		C8DA22A5089AFF4237419854 /* JetBrainsMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Regular.ttf"; sourceTree = "<group>"; };
+		E529E9BE3E0C0E92F0C70936 /* BrandFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandFonts.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		09B753FD9DA1132416E3F677 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				96C9F76F23D3372B00BAB94D /* BrandColors.swift */,
+				E529E9BE3E0C0E92F0C70936 /* BrandFonts.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		14766432DEF3D9C2A8C684C9 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				77AC092A7BCCEE737B1A787D /* History */,
+				A649EAB8A0D95F4738A090DD /* Home */,
+				CB1B5125631167930751529D /* LiveSession */,
+				7A2A1158391EC5D5F5699E7C /* Settings */,
+				09B753FD9DA1132416E3F677 /* Shared */,
+				B44EA63C863B88EC1A04E188 /* Upload */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		55EA944B22E6B73C52E281CF /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5616339FAD517735EA760A3E /* AppCoordinator.swift */,
+				8F2B3A3F4FA9E917010EF0D7 /* CaliTimerApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		77AC092A7BCCEE737B1A787D /* History */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		7A2A1158391EC5D5F5699E7C /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		821281E61BEBB2492605E88D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				731BC575082FE8FCE9950A8D /* JetBrainsMono-Bold.ttf */,
+				C8DA22A5089AFF4237419854 /* JetBrainsMono-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		957ABD579F4812629BC72759 /* CaliTimer */ = {
+			isa = PBXGroup;
+			children = (
+				2E1B651E95750212F3AA3E27 /* Info.plist */,
+				55EA944B22E6B73C52E281CF /* App */,
+				CDE382839CD9871956F2BD2F /* Resources */,
+				D652C8418E26391069AEEC9C /* Storage */,
+				14766432DEF3D9C2A8C684C9 /* UI */,
+			);
+			path = CaliTimer;
+			sourceTree = "<group>";
+		};
+		9AC94973F1A513BA97749EA2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				82AEA216E1F1B56194159D39 /* Hold.swift */,
+				8D6132500F8FFFA834A570BD /* Session.swift */,
+				0A7CE6930C77358EF084B69A /* SkillPersonalBest.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A649EAB8A0D95F4738A090DD /* Home */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		B44EA63C863B88EC1A04E188 /* Upload */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Upload;
+			sourceTree = "<group>";
+		};
+		C49E6BB2A8E1B44F50FE8B2C = {
+			isa = PBXGroup;
+			children = (
+				957ABD579F4812629BC72759 /* CaliTimer */,
+				E6C2FEDC6390BF2676116B20 /* Products */,
+			);
+			indentWidth = 4;
+			sourceTree = "<group>";
+			tabWidth = 4;
+			usesTabs = 0;
+		};
+		CB1B5125631167930751529D /* LiveSession */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LiveSession;
+			sourceTree = "<group>";
+		};
+		CDE382839CD9871956F2BD2F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				515D92EC8A55029DB719BC95 /* Assets.xcassets */,
+				821281E61BEBB2492605E88D /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D652C8418E26391069AEEC9C /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				9AC94973F1A513BA97749EA2 /* Models */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		E6C2FEDC6390BF2676116B20 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25F59B64677742565EE7B124 /* CaliTimer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6F853C73194825EAC9906A89 /* CaliTimer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30E9A796B9570B5484D9BD37 /* Build configuration list for PBXNativeTarget "CaliTimer" */;
+			buildPhases = (
+				BB46AA1095B52837F7354680 /* Sources */,
+				FAA5B46A3E4133B445604DC5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CaliTimer;
+			packageProductDependencies = (
+			);
+			productName = CaliTimer;
+			productReference = 25F59B64677742565EE7B124 /* CaliTimer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		768502AEBE6A31C132E8C978 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 4D43305A39C1DF25E170BE17 /* Build configuration list for PBXProject "CaliTimer" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = C49E6BB2A8E1B44F50FE8B2C;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6F853C73194825EAC9906A89 /* CaliTimer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FAA5B46A3E4133B445604DC5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				691DD6DF6EBDB23FE85D4A99 /* Assets.xcassets in Resources */,
+				9F80E9C60D58E7106C15B052 /* JetBrainsMono-Bold.ttf in Resources */,
+				A72B51F79D887D9670EBE0D1 /* JetBrainsMono-Regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BB46AA1095B52837F7354680 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F4261D84FEBC9224D008629 /* AppCoordinator.swift in Sources */,
+				3596F820A12E90EB45518F3A /* BrandColors.swift in Sources */,
+				39EF44E01074F5ED99976E4D /* BrandFonts.swift in Sources */,
+				580B91029C9F5D08AD4D9B44 /* CaliTimerApp.swift in Sources */,
+				6FC1B68A4E39AB8F7D216F3C /* Hold.swift in Sources */,
+				F25191481468DC369344B4D1 /* Session.swift in Sources */,
+				8F4A89813C60EDE02FD15E3E /* SkillPersonalBest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		31083C6A361CB96D1573DBB3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		800A431B9BCE47F59AE928C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = CaliTimer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.calitimer.app;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A699F1D6C67E67932F2DB396 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		AE4A0005F3C19F25B21B8986 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = CaliTimer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.calitimer.app;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		30E9A796B9570B5484D9BD37 /* Build configuration list for PBXNativeTarget "CaliTimer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				800A431B9BCE47F59AE928C8 /* Debug */,
+				AE4A0005F3C19F25B21B8986 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4D43305A39C1DF25E170BE17 /* Build configuration list for PBXProject "CaliTimer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A699F1D6C67E67932F2DB396 /* Debug */,
+				31083C6A361CB96D1573DBB3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 768502AEBE6A31C132E8C978 /* Project object */;
+}
