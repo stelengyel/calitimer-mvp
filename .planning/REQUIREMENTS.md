@@ -81,41 +81,42 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DETE-01 | Phase 1 | Pending |
-| DETE-02 | Phase 1 | Pending |
-| DETE-03 | Phase 1 | Pending |
-| DETE-04 | Phase 1 | Pending |
-| DETE-05 | Phase 1 | Pending |
-| DETE-06 | Phase 1 | Pending |
-| DETE-07 | Phase 1 | Pending |
-| CAMR-01 | Phase 1 | Pending |
-| CAMR-02 | Phase 1 | Pending |
-| SESS-01 | Phase 1 | Pending |
-| SESS-02 | Phase 1 | Pending |
-| HIST-01 | Phase 1 | Pending |
-| HIST-02 | Phase 1 | Pending |
-| VIDU-01 | Phase 1 | Pending |
-| VIDU-02 | Phase 1 | Pending |
-| VIDL-01 | Phase 2 | Pending |
-| VIDL-02 | Phase 2 | Pending |
-| VIDL-03 | Phase 2 | Pending |
-| VIDU-03 | Phase 2 | Pending |
-| ROBU-01 | Phase 3 | Pending |
-| ROBU-02 | Phase 3 | Pending |
-| ROBU-03 | Phase 3 | Pending |
-| SKIL-01 | Phase 4 (v2) | Pending |
-| SKIL-02 | Phase 4 (v2) | Pending |
-| SKIL-03 | Phase 4 (v2) | Pending |
-| SKIL-04 | Phase 4 (v2) | Pending |
-| SKIL-05 | Phase 4 (v2) | Pending |
-| ANLT-01 | Phase 4 (v2) | Pending |
+| CAMR-01 | Phase 2 | Pending |
+| CAMR-02 | Phase 2 | Pending |
+| SESS-01 | Phase 2 | Pending |
+| SESS-02 | Phase 2 | Pending |
+| VIDU-01 | Phase 3 | Pending |
+| DETE-05 | Phase 4 | Pending |
+| DETE-01 | Phase 5 | Pending |
+| DETE-02 | Phase 5 | Pending |
+| DETE-03 | Phase 5 | Pending |
+| DETE-04 | Phase 5 | Pending |
+| DETE-06 | Phase 5 | Pending |
+| DETE-07 | Phase 5 | Pending |
+| VIDU-02 | Phase 5 | Pending |
+| HIST-01 | Phase 6 | Pending |
+| HIST-02 | Phase 6 | Pending |
+| VIDL-01 | Phase 7 | Pending |
+| VIDL-02 | Phase 7 | Pending |
+| VIDL-03 | Phase 7 | Pending |
+| VIDU-03 | Phase 7 | Pending |
+| ROBU-01 | Phase 8 | Pending |
+| ROBU-02 | Phase 8 | Pending |
+| ROBU-03 | Phase 8 | Pending |
+| SKIL-01 | Phase 9 (v2) | Pending |
+| SKIL-02 | Phase 9 (v2) | Pending |
+| SKIL-03 | Phase 9 (v2) | Pending |
+| SKIL-04 | Phase 9 (v2) | Pending |
+| SKIL-05 | Phase 9 (v2) | Pending |
+| ANLT-01 | Phase 9 (v2) | Pending |
 
 **Coverage:**
 - v1 requirements: 22 total
 - Mapped to phases: 22
 - Unmapped: 0 ✓
-- v2 requirements: 6 total (mapped to Phase 4, gated on Phase 1 accuracy validation)
+- v2 requirements: 6 total (mapped to Phase 9, gated on Phase 5 accuracy validation)
+- Phase 1 note: Infrastructure phase — no direct v1 requirements, enables all subsequent phases
 
 ---
 *Requirements defined: 2026-03-01*
-*Last updated: 2026-03-01 after roadmap revision (VIDU-01, VIDU-02 moved Phase 2 → Phase 1)*
+*Last updated: 2026-03-01 after roadmap redesign (9-phase structure)*
