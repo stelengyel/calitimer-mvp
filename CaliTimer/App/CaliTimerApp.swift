@@ -7,10 +7,22 @@ struct CaliTimerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            // NavigationStack + DrawerView wired in Plan 03
-            // Placeholder: confirm compilation before screens are added
-            Text("CaliTimer — scaffold")
-                .environment(coordinator)
+            NavigationStack(path: $coordinator.path) {
+                HomeView()
+                    .navigationDestination(for: AppCoordinator.Destination.self) { destination in
+                        switch destination {
+                        case .history:     HistoryView()
+                        case .upload:      UploadModeView()
+                        case .settings:    SettingsView()
+                        case .liveSession: LiveSessionView()
+                        }
+                    }
+                    .environment(coordinator)
+            }
+            .overlay(alignment: .leading) {
+                DrawerView()
+                    .environment(coordinator)
+            }
         }
         .modelContainer(for: [Session.self, Hold.self, SkillPersonalBest.self])
     }
