@@ -17,8 +17,8 @@ struct CaliTimerApp: App {
                         case .liveSession: LiveSessionView()
                         }
                     }
-                    .environment(coordinator)
             }
+            .environment(coordinator)
             .overlay(alignment: .leading) {
                 DrawerView()
                     .environment(coordinator)
