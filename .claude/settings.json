@@ -1,6 +1,6 @@
 {
   "enabledPlugins": {
     "figma@claude-plugins-official": false,
-    "swift-engineering@claude-swift-engineering": false
+    "swift-engineering@claude-swift-engineering": true
   }
 }
