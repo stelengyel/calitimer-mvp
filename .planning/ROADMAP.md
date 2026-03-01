@@ -34,7 +34,7 @@ CaliTimer ships in 9 phases ordered by dependency and risk. The first phase esta
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Xcode project scaffold: AppCoordinator, brand system (BrandColors, BrandFonts, JetBrains Mono), empty SwiftData @Model scaffolds
+- [x] 01-01-PLAN.md — Xcode project scaffold: AppCoordinator, brand system (BrandColors, BrandFonts, JetBrains Mono), empty SwiftData @Model scaffolds
 - [ ] 01-02-PLAN.md — Five screen shells: HomeView (ember hero), LiveSessionView (full-screen), HistoryView, UploadModeView (three-zone), SettingsView
 - [ ] 01-03-PLAN.md — DrawerView + full navigation wiring + human verify on simulator
 
@@ -133,7 +133,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. App Layout & Navigation | 0/TBD | Not started | - |
+| 1. App Layout & Navigation | 1/3 | In Progress|  |
 | 2. Camera Setup + Session View | 0/TBD | Not started | - |
 | 3. Video Upload Shell | 0/TBD | Not started | - |
 | 4. Pose Detection | 0/TBD | Not started | - |
