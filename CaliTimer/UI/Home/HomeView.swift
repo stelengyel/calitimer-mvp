@@ -1,0 +1,74 @@
+import SwiftUI
+
+struct HomeView: View {
+    @Environment(AppCoordinator.self) private var coordinator
+
+    var body: some View {
+        ZStack {
+            // Midnight base
+            Color.brandBackground.ignoresSafeArea()
+
+            // Ember gradient hero — subtle glow at ~15% opacity over the midnight base
+            // Full-screen coverage; the Start Session button uses full-opacity gradient for contrast
+            LinearGradient(
+                colors: [.brandEmber, .brandAmber, .brandGold],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+            .opacity(0.15)
+
+            VStack(spacing: 0) {
+                Spacer()
+
+                // App name
+                Text("CaliTimer")
+                    .font(.monoBold(40))
+                    .foregroundStyle(Color.textPrimary)
+                    .padding(.bottom, 8)
+
+                Text("automatic hold timing")
+                    .font(.mono(14))
+                    .foregroundStyle(Color.textSecondary)
+                    .padding(.bottom, 60)
+
+                Spacer()
+
+                // Start Session CTA — full-opacity brand gradient
+                Button {
+                    coordinator.navigate(to: .liveSession)
+                } label: {
+                    Text("Start Session")
+                        .font(.monoBold(18))
+                        .foregroundStyle(Color.brandBackground)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 18)
+                        .background(
+                            LinearGradient(
+                                colors: [.brandEmber, .brandAmber, .brandGold],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                }
+                .padding(.horizontal, 32)
+                .padding(.bottom, 60)
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                        coordinator.isDrawerOpen = true
+                    }
+                } label: {
+                    Image(systemName: "line.3.horizontal")
+                        .foregroundStyle(Color.textPrimary)
+                        .imageScale(.large)
+                }
+            }
+        }
+    }
+}
