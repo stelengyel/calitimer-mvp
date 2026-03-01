@@ -31,7 +31,12 @@ CaliTimer ships in 9 phases ordered by dependency and risk. The first phase esta
   2. All top-level screens exist as named shells (Session, History, Upload, Settings or equivalent structure derived from design)
   3. Navigation between all screens works — tapping a tab or back button reaches the correct destination every time
   4. Each screen shell renders its placeholder title/content so it is unambiguous which screen is active
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Xcode project scaffold: AppCoordinator, brand system (BrandColors, BrandFonts, JetBrains Mono), empty SwiftData @Model scaffolds
+- [ ] 01-02-PLAN.md — Five screen shells: HomeView (ember hero), LiveSessionView (full-screen), HistoryView, UploadModeView (three-zone), SettingsView
+- [ ] 01-03-PLAN.md — DrawerView + full navigation wiring + human verify on simulator
 
 ### Phase 2: Camera Setup + Session View
 **Goal**: An athlete can open the app, start a session, see a live camera feed, switch between front and rear cameras, and end the session — the app is physically usable propped on a stand with no hands required
