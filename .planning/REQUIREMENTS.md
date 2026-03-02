@@ -22,8 +22,8 @@
 
 ### Session
 
-- [ ] **SESS-01**: User can start and end an explicit training session
-- [ ] **SESS-02**: All holds detected during a session are grouped under that session
+- [x] **SESS-01**: User can start and end an explicit training session
+- [x] **SESS-02**: All holds detected during a session are grouped under that session
 
 ### Video — Live Mode
 
@@ -83,8 +83,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | CAMR-01 | Phase 2 | Complete |
 | CAMR-02 | Phase 2 | Complete |
-| SESS-01 | Phase 2 | Pending |
-| SESS-02 | Phase 2 | Pending |
+| SESS-01 | Phase 2 | Complete |
+| SESS-02 | Phase 2 | Complete |
 | VIDU-01 | Phase 3 | Pending |
 | DETE-05 | Phase 4 | Pending |
 | DETE-01 | Phase 5 | Pending |
