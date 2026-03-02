@@ -1,26 +1,32 @@
-import AVFoundation
+@preconcurrency import AVFoundation
 import SwiftUI
 
 /// Owns the AVCaptureSession for the app's lifetime.
-/// Isolated entirely to CameraActor — AVCaptureSession is NOT Sendable
-/// and must never cross actor boundaries to SwiftUI views.
-@CameraActor
-final class CameraManager: NSObject, ObservableObject {
-    // MARK: - Session
+/// @MainActor isolation keeps all UI-facing state on the main actor, matching SwiftUI.
+/// AVFoundation session operations that block (startRunning, stopRunning) are dispatched
+/// to a background serial queue to avoid blocking the main thread.
+/// Note: @CameraActor is reserved for Phase 4 Vision frame processing (VisionProcessor).
+@MainActor
+final class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
 
-    private let session = AVCaptureSession()
-    private var currentInput: AVCaptureDeviceInput?
+    // MARK: - Private serial queue for blocking AVFoundation ops
+
+    private static let queue = DispatchQueue(label: "com.calitimer.camera", qos: .userInitiated)
+
+    // MARK: - Session (nonisolated(unsafe) — only touched on queue or during config from MainActor)
+
+    nonisolated(unsafe) private let session = AVCaptureSession()
+    nonisolated(unsafe) private var currentInput: AVCaptureDeviceInput?
 
     // MARK: - Preview
 
-    /// Initialized in init() before actor isolation matters.
-    /// Pass this reference to CameraPreviewView — never pass the session itself.
-    nonisolated let previewLayer: AVCaptureVideoPreviewLayer
+    /// Live camera preview layer. @MainActor-owned; safe to access in SwiftUI body.
+    let previewLayer: AVCaptureVideoPreviewLayer
 
-    // MARK: - State (published to MainActor UI)
+    // MARK: - State
 
     /// True when camera permission was denied or restricted.
-    @MainActor var permissionDenied: Bool = false
+    @Published var permissionDenied: Bool = false
 
     // MARK: - Init
 
@@ -33,7 +39,6 @@ final class CameraManager: NSObject, ObservableObject {
 
     // MARK: - Session Lifecycle
 
-    /// Call from LiveSessionView.task — hops to CameraActor automatically.
     func startSession() async {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         switch status {
@@ -44,10 +49,10 @@ final class CameraManager: NSObject, ObservableObject {
             if granted {
                 await configureAndStart()
             } else {
-                await MainActor.run { permissionDenied = true }
+                permissionDenied = true
             }
         case .denied, .restricted:
-            await MainActor.run { permissionDenied = true }
+            permissionDenied = true
         @unknown default:
             break
         }
@@ -55,14 +60,13 @@ final class CameraManager: NSObject, ObservableObject {
 
     /// Stop the session when the session screen is dismissed.
     func stopSession() {
-        guard session.isRunning else { return }
-        session.stopRunning()
+        let s = session
+        Self.queue.async { s.stopRunning() }
     }
 
     // MARK: - Camera Flip
 
     /// Atomically swap front ↔ rear camera input.
-    /// Uses beginConfiguration/commitConfiguration — required for atomic reconfiguration.
     func flipCamera() {
         guard let currentInput else { return }
         let currentPosition = currentInput.device.position
@@ -79,7 +83,6 @@ final class CameraManager: NSObject, ObservableObject {
             session.addInput(newInput)
             self.currentInput = newInput
         } else {
-            // Restore original on failure
             session.addInput(currentInput)
         }
         session.commitConfiguration()
@@ -90,11 +93,8 @@ final class CameraManager: NSObject, ObservableObject {
     private func configureAndStart() async {
         guard !session.isRunning else { return }
 
-        // Configure session preset for 1080p — appropriate for handstand detection in Phase 4+
-        // 4K omitted: thermal overhead not justified for Phase 2 preview-only
         session.sessionPreset = .hd1920x1080
 
-        // Add rear camera input by default
         if currentInput == nil {
             if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
                let input = try? AVCaptureDeviceInput(device: device) {
@@ -105,10 +105,16 @@ final class CameraManager: NSObject, ObservableObject {
             }
         }
 
-        // Connect session to preview layer
+        // Connect session to preview layer on MainActor before starting
         previewLayer.session = session
 
-        // startRunning() is blocking — safe here because we are on CameraActor (not MainActor)
-        session.startRunning()
+        // startRunning() blocks — dispatch off main thread
+        let s = session
+        await withCheckedContinuation { continuation in
+            Self.queue.async {
+                s.startRunning()
+                continuation.resume()
+            }
+        }
     }
 }

@@ -5,7 +5,7 @@ struct LiveSessionView: View {
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.modelContext) private var modelContext
 
-    // CameraManager lives on CameraActor; UI reads @MainActor-published state
+    // CameraManager is @MainActor — safe to access in body without actor gymnastics
     @State private var cameraManager = CameraManager()
     @State private var showingConfigSheet = false
 
@@ -30,7 +30,7 @@ struct LiveSessionView: View {
                 HStack {
                     Spacer()
                     Button {
-                        Task { @CameraActor in cameraManager.flipCamera() }
+                        cameraManager.flipCamera()
                     } label: {
                         Image(systemName: "arrow.triangle.2.circlepath.camera")
                             .font(.system(size: 20, weight: .medium))
@@ -75,11 +75,11 @@ struct LiveSessionView: View {
         }
         .toolbar(.hidden, for: .navigationBar)
         .task {
-            // .task runs on @MainActor by default; startSession() hops to CameraActor
+            // startSession() is @MainActor async — hops to background queue for startRunning()
             await cameraManager.startSession()
         }
         .onDisappear {
-            Task { @CameraActor in cameraManager.stopSession() }
+            cameraManager.stopSession()
         }
         .sheet(isPresented: $showingConfigSheet) {
             SessionConfigSheet { skill, targetDuration in
