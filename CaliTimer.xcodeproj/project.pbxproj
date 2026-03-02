@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 63;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -28,6 +28,7 @@
 /* Begin PBXFileReference section */
 		034851B352105463549F3668 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0A7CE6930C77358EF084B69A /* SkillPersonalBest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillPersonalBest.swift; sourceTree = "<group>"; };
+		25F59B64677742565EE7B124 /* CaliTimer.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CaliTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1B651E95750212F3AA3E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		515D92EC8A55029DB719BC95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54D4267026132D87F55DB2A5 /* DrawerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerView.swift; sourceTree = "<group>"; };
@@ -40,7 +41,6 @@
 		8D6132500F8FFFA834A570BD /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		8F2B3A3F4FA9E917010EF0D7 /* CaliTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaliTimerApp.swift; sourceTree = "<group>"; };
 		96C9F76F23D3372B00BAB94D /* BrandColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandColors.swift; sourceTree = "<group>"; };
-		9B5D3EAC2F559643009C6E34 /* CaliTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaliTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4BC430DA8BD91DECD30D166 /* LiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionView.swift; sourceTree = "<group>"; };
 		C8DA22A5089AFF4237419854 /* JetBrainsMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Regular.ttf"; sourceTree = "<group>"; };
 		E529E9BE3E0C0E92F0C70936 /* BrandFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandFonts.swift; sourceTree = "<group>"; };
@@ -126,14 +126,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		9B5D3EAD2F559643009C6E34 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9B5D3EAC2F559643009C6E34 /* CaliTimer.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		A649EAB8A0D95F4738A090DD /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,7 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				957ABD579F4812629BC72759 /* CaliTimer */,
-				9B5D3EAD2F559643009C6E34 /* Products */,
+				E6C2FEDC6390BF2676116B20 /* Products */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -186,6 +178,14 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
+		E6C2FEDC6390BF2676116B20 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25F59B64677742565EE7B124 /* CaliTimer.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -204,7 +204,7 @@
 			packageProductDependencies = (
 			);
 			productName = CaliTimer;
-			productReference = 9B5D3EAC2F559643009C6E34 /* CaliTimer.app */;
+			productReference = 25F59B64677742565EE7B124 /* CaliTimer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -214,7 +214,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2620;
+				LastUpgradeCheck = 1600;
 			};
 			buildConfigurationList = 4D43305A39C1DF25E170BE17 /* Build configuration list for PBXProject "CaliTimer" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -226,7 +226,7 @@
 			);
 			mainGroup = C49E6BB2A8E1B44F50FE8B2C;
 			minimizedProjectReferenceProxies = 1;
-			productRefGroup = 9B5D3EAD2F559643009C6E34 /* Products */;
+			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -307,11 +307,9 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = UFGH7H2T8U;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -325,7 +323,6 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -388,10 +385,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = UFGH7H2T8U;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -412,7 +407,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = complete;
