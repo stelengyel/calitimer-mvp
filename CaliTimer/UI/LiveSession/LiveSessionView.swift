@@ -1,60 +1,121 @@
 import SwiftUI
+import AVFoundation
 
 struct LiveSessionView: View {
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(\.modelContext) private var modelContext
+
+    // CameraManager lives on CameraActor; UI reads @MainActor-published state
+    @State private var cameraManager = CameraManager()
+    @State private var showingConfigSheet = false
+
+    // Session config passed from HomeView via AppCoordinator (or stored there)
+    var sessionSkill: String = "Handstand"
+    var sessionTargetDuration: TimeInterval? = nil
 
     var body: some View {
         ZStack {
-            Color.brandBackground.ignoresSafeArea()
+            // Layer 0: Camera preview — full bleed, edge-to-edge
+            if cameraManager.permissionDenied {
+                // Permission denied inline fallback — not a full-screen takeover
+                permissionDeniedView
+            } else {
+                CameraPreviewView(previewLayer: cameraManager.previewLayer)
+                    .ignoresSafeArea()
+            }
 
-            VStack(spacing: 0) {
-                // Camera feed placeholder — dark rectangle
-                // Phase 2 drops CameraPreviewView (UIViewRepresentable) directly here
-                ZStack {
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.black.opacity(0.85))
-
-                    VStack(spacing: 8) {
-                        Image(systemName: "camera.fill")
-                            .font(.system(size: 32))
-                            .foregroundStyle(Color.textSecondary)
-                        Text("Camera feed")
-                            .font(.mono(13))
-                            .foregroundStyle(Color.textSecondary)
-                        Text("Phase 2")
-                            .font(.mono(11))
-                            .foregroundStyle(Color.textSecondary.opacity(0.6))
+            // Layer 1: Overlaid controls
+            VStack {
+                // Top row: flip button (top-right)
+                HStack {
+                    Spacer()
+                    Button {
+                        Task { @CameraActor in cameraManager.flipCamera() }
+                    } label: {
+                        Image(systemName: "arrow.triangle.2.circlepath.camera")
+                            .font(.system(size: 20, weight: .medium))
+                            .foregroundStyle(.white)
+                            .padding(12)
+                            .background(.ultraThinMaterial, in: Circle())
                     }
+                    .padding(.top, 60)
+                    .padding(.trailing, 20)
                 }
-                .padding(.horizontal, 16)
-                .padding(.top, 60)
 
                 Spacer()
 
-                // Placeholder controls area
-                // Phase 2 adds real Start/End session controls here
-                VStack(spacing: 16) {
-                    Text("Session Controls")
-                        .font(.mono(12))
-                        .foregroundStyle(Color.textSecondary.opacity(0.5))
+                // Bottom row: End Session (left, small) + gear icon (right)
+                HStack {
+                    Button("End Session") {
+                        coordinator.popToRoot()
+                    }
+                    .font(.mono(14))
+                    .foregroundStyle(.white.opacity(0.85))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 8))
+                    .padding(.leading, 24)
+                    .padding(.bottom, 48)
+
+                    Spacer()
 
                     Button {
-                        coordinator.popToRoot()
+                        showingConfigSheet = true
                     } label: {
-                        Text("End Session")
-                            .font(.monoBold(16))
-                            .foregroundStyle(Color.brandEmber)
-                            .padding(.horizontal, 32)
-                            .padding(.vertical, 12)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.brandEmber, lineWidth: 1)
-                            )
+                        Image(systemName: "gearshape")
+                            .font(.system(size: 20, weight: .medium))
+                            .foregroundStyle(.white)
+                            .padding(12)
+                            .background(.ultraThinMaterial, in: Circle())
                     }
+                    .padding(.trailing, 24)
+                    .padding(.bottom, 48)
                 }
-                .padding(.bottom, 48)
             }
         }
-        .toolbar(.hidden, for: .navigationBar)  // Full-screen — no nav chrome (iOS 16+, preferred over navigationBarHidden)
+        .toolbar(.hidden, for: .navigationBar)
+        .task {
+            // .task runs on @MainActor by default; startSession() hops to CameraActor
+            await cameraManager.startSession()
+        }
+        .onDisappear {
+            Task { @CameraActor in cameraManager.stopSession() }
+        }
+        .sheet(isPresented: $showingConfigSheet) {
+            SessionConfigSheet { skill, targetDuration in
+                // Mid-session config update — session already created; just update in-memory
+                // Full session mutation deferred to Phase 6 when holds relationship exists
+            }
+            .presentationDetents([.medium])
+        }
+    }
+
+    private var permissionDeniedView: some View {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            VStack(spacing: 16) {
+                Image(systemName: "camera.slash")
+                    .font(.system(size: 40))
+                    .foregroundStyle(Color.textSecondary)
+                Text("Camera access required")
+                    .font(.monoBold(16))
+                    .foregroundStyle(Color.textPrimary)
+                Text("CaliTimer needs camera access to detect handstand holds.")
+                    .font(.mono(13))
+                    .foregroundStyle(Color.textSecondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 32)
+                Button("Open Settings") {
+                    Task {
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            await UIApplication.shared.open(url)
+                        }
+                    }
+                }
+                .font(.monoBold(15))
+                .foregroundStyle(Color.brandEmber)
+                .padding(.top, 8)
+            }
+        }
     }
 }

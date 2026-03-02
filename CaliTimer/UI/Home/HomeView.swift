@@ -2,6 +2,9 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(\.modelContext) private var modelContext
+
+    @State private var showingConfigSheet = false
 
     var body: some View {
         ZStack {
@@ -36,7 +39,7 @@ struct HomeView: View {
 
                 // Start Session CTA — full-opacity brand gradient
                 Button {
-                    coordinator.navigate(to: .liveSession)
+                    showingConfigSheet = true
                 } label: {
                     Text("Start Session")
                         .font(.monoBold(18))
@@ -69,6 +72,14 @@ struct HomeView: View {
                         .imageScale(.large)
                 }
             }
+        }
+        .sheet(isPresented: $showingConfigSheet) {
+            SessionConfigSheet { skill, targetDuration in
+                let session = Session(skill: skill, targetDuration: targetDuration)
+                modelContext.insert(session)
+                coordinator.navigate(to: .liveSession)
+            }
+            .presentationDetents([.medium])
         }
     }
 }
