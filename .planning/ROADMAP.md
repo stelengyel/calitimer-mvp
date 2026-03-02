@@ -48,7 +48,12 @@ Plans:
   3. User can start a session (explicit start action) and end a session (explicit end action) from the session screen
   4. All session holds will later be grouped under the active session — the session model exists and is associated correctly (verifiable via SwiftData inspector or debug log)
   5. The session screen layout functions correctly when the phone is propped horizontally on a stand — no UI element requires the user to hold the phone
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — NSCameraUsageDescription + CameraActor + CameraManager (AVFoundation infrastructure)
+- [ ] 02-02-PLAN.md — Session @Model properties + CameraPreviewView + LiveSessionView ZStack + SessionConfigSheet + HomeView sheet wiring
+- [ ] 02-03-PLAN.md — Build + run on simulator + human verify camera/session flow
 
 ### Phase 3: Video Upload Shell
 **Goal**: A user can open the upload screen, pick a video from their photo library, and see it play back inside the app — the detection pipeline is not wired yet but the UI scaffold is complete and ready for Phase 5 to plug into
@@ -134,7 +139,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. App Layout & Navigation | 3/3 | Complete | 2026-03-01 |
-| 2. Camera Setup + Session View | 0/TBD | Not started | - |
+| 2. Camera Setup + Session View | 0/3 | Not started | - |
 | 3. Video Upload Shell | 0/TBD | Not started | - |
 | 4. Pose Detection | 0/TBD | Not started | - |
 | 5. Handstand Detection + Timer | 0/TBD | Not started | - |
