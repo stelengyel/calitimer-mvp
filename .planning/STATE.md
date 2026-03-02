@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-01T20:21:57.065Z"
+last_updated: "2026-03-02T18:51:55.413Z"
 progress:
-  total_phases: 1
+  total_phases: 2
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 6
+  completed_plans: 4
 ---
 
 # Project State
@@ -23,9 +23,9 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 ## Current Position
 
 Phase: 2 of 9 phases (Camera Setup + Session View)
-Plan: 0 of TBD in current phase
-Status: Phase 1 complete — ready for Phase 2
-Last activity: 2026-03-01 — Plan 01-03 complete: DrawerView + full navigation wiring — human-verified navigable app shell on iOS Simulator (all 22 checklist items passed)
+Plan: 1 of 3 in current phase
+Status: Phase 2 in progress — Plan 01 complete (CameraActor + CameraManager infrastructure)
+Last activity: 2026-03-02 — Plan 02-01 complete: CameraActor global actor + CameraManager with AVCaptureSession lifecycle, atomic flip, and NSCameraUsageDescription
 
 Progress: [█░░░░░░░░░] 11% (1 of 9 phases complete)
 
@@ -50,6 +50,7 @@ Progress: [█░░░░░░░░░] 11% (1 of 9 phases complete)
 | Phase 01-app-layout-navigation P01 | 18 | 2 tasks | 13 files |
 | Phase 01-app-layout-navigation P02 | 3 | 2 tasks | 5 files |
 | Phase 01-app-layout-navigation P03 | 15 | 2 tasks | 3 files |
+| Phase 02-camera-setup-session-view P01 | 10 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -72,6 +73,9 @@ Recent decisions affecting current work:
 - [Phase 01-app-layout-navigation]: Conditional dim overlay (if coordinator.isDrawerOpen) required — always-present transparent overlay blocks NavigationStack swipe-back gesture
 - [Phase 01-app-layout-navigation]: DrawerView receives .environment(coordinator) separately as overlay — overlays outside NavigationStack do not inherit nav stack environment
 - [Phase 01-app-layout-navigation]: .environment(coordinator) must be scoped to HomeView inside NavigationStack — not on NavigationStack itself — for correct propagation through navigationDestination views
+- [Phase 02-camera-setup-session-view]: CameraActor @globalActor (not @MainActor) — AVCaptureSession.startRunning() is blocking; running on MainActor freezes UI
+- [Phase 02-camera-setup-session-view]: previewLayer nonisolated let — AVCaptureVideoPreviewLayer is not Sendable; nonisolated let safely bridges actor boundary to SwiftUI
+- [Phase 02-camera-setup-session-view]: permissionDenied @MainActor var — enables direct SwiftUI binding without MainActor.run boilerplate at call sites
 
 ### Pending Todos
 
@@ -86,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-01 (01-03 complete — Phase 1 complete)
-Stopped at: Completed 01-app-layout-navigation/01-03-PLAN.md — DrawerView + full navigation wiring + human-verified on simulator
+Last session: 2026-03-02 (02-01 complete — Camera infrastructure)
+Stopped at: Completed 02-camera-setup-session-view/02-01-PLAN.md — CameraActor + CameraManager implemented
 Resume file: None

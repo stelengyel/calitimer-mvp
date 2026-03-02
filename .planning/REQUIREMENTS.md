@@ -17,8 +17,8 @@
 
 ### Camera
 
-- [ ] **CAMR-01**: App works with front and rear camera (user selects during session)
-- [ ] **CAMR-02**: App functions with phone propped on a stand without user holding it
+- [x] **CAMR-01**: App works with front and rear camera (user selects during session)
+- [x] **CAMR-02**: App functions with phone propped on a stand without user holding it
 
 ### Session
 
@@ -81,8 +81,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CAMR-01 | Phase 2 | Pending |
-| CAMR-02 | Phase 2 | Pending |
+| CAMR-01 | Phase 2 | Complete |
+| CAMR-02 | Phase 2 | Complete |
 | SESS-01 | Phase 2 | Pending |
 | SESS-02 | Phase 2 | Pending |
 | VIDU-01 | Phase 3 | Pending |
