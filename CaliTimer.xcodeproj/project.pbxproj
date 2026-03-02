@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		109771AAD7A50F4668A4FBC8 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB3272524DA2FC68D1D6861 /* CameraManager.swift */; };
 		17BED22F0211DD1CE67260A5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D39DCB259B6EB56E5EC94AB /* HomeView.swift */; };
 		3596F820A12E90EB45518F3A /* BrandColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C9F76F23D3372B00BAB94D /* BrandColors.swift */; };
 		39EF44E01074F5ED99976E4D /* BrandFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529E9BE3E0C0E92F0C70936 /* BrandFonts.swift */; };
@@ -22,6 +23,7 @@
 		9F80E9C60D58E7106C15B052 /* JetBrainsMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 731BC575082FE8FCE9950A8D /* JetBrainsMono-Bold.ttf */; };
 		A72B51F79D887D9670EBE0D1 /* JetBrainsMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8DA22A5089AFF4237419854 /* JetBrainsMono-Regular.ttf */; };
 		E0AEFB8502CB36535CE0D75B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034851B352105463549F3668 /* SettingsView.swift */; };
+		EA9DBF4BE5FF3A5DFDA58B9E /* CameraActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3799D788BADC9431A96B84 /* CameraActor.swift */; };
 		F25191481468DC369344B4D1 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6132500F8FFFA834A570BD /* Session.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +45,8 @@
 		96C9F76F23D3372B00BAB94D /* BrandColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandColors.swift; sourceTree = "<group>"; };
 		A4BC430DA8BD91DECD30D166 /* LiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionView.swift; sourceTree = "<group>"; };
 		C8DA22A5089AFF4237419854 /* JetBrainsMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Regular.ttf"; sourceTree = "<group>"; };
+		CA3799D788BADC9431A96B84 /* CameraActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActor.swift; sourceTree = "<group>"; };
+		DBB3272524DA2FC68D1D6861 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		E529E9BE3E0C0E92F0C70936 /* BrandFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +113,7 @@
 			children = (
 				2E1B651E95750212F3AA3E27 /* Info.plist */,
 				55EA944B22E6B73C52E281CF /* App */,
+				FDB4487230232A3C9B903F8B /* Camera */,
 				CDE382839CD9871956F2BD2F /* Resources */,
 				D652C8418E26391069AEEC9C /* Storage */,
 				14766432DEF3D9C2A8C684C9 /* UI */,
@@ -186,6 +191,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		FDB4487230232A3C9B903F8B /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				CA3799D788BADC9431A96B84 /* CameraActor.swift */,
+				DBB3272524DA2FC68D1D6861 /* CameraManager.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -257,6 +271,8 @@
 				3596F820A12E90EB45518F3A /* BrandColors.swift in Sources */,
 				39EF44E01074F5ED99976E4D /* BrandFonts.swift in Sources */,
 				580B91029C9F5D08AD4D9B44 /* CaliTimerApp.swift in Sources */,
+				EA9DBF4BE5FF3A5DFDA58B9E /* CameraActor.swift in Sources */,
+				109771AAD7A50F4668A4FBC8 /* CameraManager.swift in Sources */,
 				77CC2D8222280F2D65D1B6C8 /* DrawerView.swift in Sources */,
 				49868552152379BF4AEF76C4 /* HistoryView.swift in Sources */,
 				6FC1B68A4E39AB8F7D216F3C /* Hold.swift in Sources */,
