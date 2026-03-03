@@ -11,7 +11,7 @@ CaliTimer ships in 9 phases ordered by dependency and risk. The first phase esta
 - Decimal phases (2.1, 2.2): Urgent insertions (created via /gsd:insert-phase, execute between surrounding integers)
 
 - [x] **Phase 1: App Layout & Navigation** - Screen shells, tab/nav structure, navigation plumbing — no features, just a real app skeleton that builds and runs
-- [ ] **Phase 2: Camera Setup + Session View** - Live camera feed in app, session start/end controls, front/rear camera switch
+- [x] **Phase 2: Camera Setup + Session View** - Live camera feed in app, session start/end controls, front/rear camera switch
 - [ ] **Phase 3: Video Upload Shell** - PHPicker import, video playback UI scaffold (detection not wired yet)
 - [ ] **Phase 4: Pose Detection** - Vision framework running on live and uploaded frames, skeleton overlay rendered and toggleable
 - [ ] **Phase 5: Handstand Detection + Timer** - HoldStateMachine, live timer, detection indicator, haptic/visual alert, target duration, detection wired to imported video
@@ -51,9 +51,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — NSCameraUsageDescription + CameraActor + CameraManager (AVFoundation infrastructure)
-- [ ] 02-02-PLAN.md — Session @Model properties + CameraPreviewView + LiveSessionView ZStack + SessionConfigSheet + HomeView sheet wiring
-- [ ] 02-03-PLAN.md — Build + run on simulator + human verify camera/session flow
+- [x] 02-01-PLAN.md — NSCameraUsageDescription + CameraActor + CameraManager (AVFoundation infrastructure)
+- [x] 02-02-PLAN.md — Session @Model properties + CameraPreviewView + LiveSessionView ZStack + SessionConfigSheet + HomeView sheet wiring
+- [x] 02-03-PLAN.md — Build + run on simulator + human verify camera/session flow
 
 ### Phase 3: Video Upload Shell
 **Goal**: A user can open the upload screen, pick a video from their photo library, and see it play back inside the app — the detection pipeline is not wired yet but the UI scaffold is complete and ready for Phase 5 to plug into
@@ -139,7 +139,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. App Layout & Navigation | 3/3 | Complete | 2026-03-01 |
-| 2. Camera Setup + Session View | 1/3 | In Progress|  |
+| 2. Camera Setup + Session View | 3/3 | Complete | 2026-03-02 |
 | 3. Video Upload Shell | 0/TBD | Not started | - |
 | 4. Pose Detection | 0/TBD | Not started | - |
 | 5. Handstand Detection + Timer | 0/TBD | Not started | - |
