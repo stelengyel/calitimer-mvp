@@ -144,7 +144,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 |-------|----------------|--------|-----------|
 | 1. App Layout & Navigation | 3/3 | Complete | 2026-03-01 |
 | 2. Camera Setup + Session View | 3/3 | Complete | 2026-03-02 |
-| 3. Video Upload Shell | 0/2 | Not started | - |
+| 3. Video Upload Shell | 1/2 | In Progress|  |
 | 4. Pose Detection | 0/TBD | Not started | - |
 | 5. Handstand Detection + Timer | 0/TBD | Not started | - |
 | 6. Session History & Personal Bests | 0/TBD | Not started | - |

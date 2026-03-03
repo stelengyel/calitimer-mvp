@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-03T18:37:44.604Z"
+stopped_at: Completed 03-video-upload-shell 03-01-PLAN.md
+last_updated: "2026-03-03T18:53:59.630Z"
 last_activity: "2026-03-03 — Phase 2 closed: sublayer camera fix, all UAT confirmed, verification written"
 progress:
   total_phases: 9
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 2
+  completed_plans: 1
   percent: 22
 ---
 
@@ -57,6 +57,7 @@ Progress: [██░░░░░░░░] 22% (2 of 9 phases complete)
 | Phase 02-camera-setup-session-view P01 | 10 | 2 tasks | 5 files |
 | Phase 02-camera-setup-session-view P02 | 2 | 2 tasks | 6 files |
 | Phase 02-camera-setup-session-view P03 | 5 | 2 tasks | 1 file |
+| Phase 03-video-upload-shell P01 | 4 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,9 @@ Recent decisions affecting current work:
 - [Phase 02-camera-setup-session-view]: permissionDenied @Published var on @MainActor CameraManager — enables direct SwiftUI binding without bridging
 - [Phase 02-camera-setup-session-view]: SessionConfigSheet onConfirm closure pattern enables reuse in HomeView (pre-session) and LiveSessionView (mid-session) contexts
 - [Phase 02-camera-setup-session-view]: Session @Model Phase 2 minimum: startedAt/skill/targetDuration only — endedAt and holds deferred to Phase 6
+- [Phase 03-video-upload-shell]: handlePickerResult is async to satisfy @MainActor call from Task { @MainActor in } in PHPickerSheet.Coordinator
+- [Phase 03-video-upload-shell]: Timer stored on self (not captured in closure) + MainActor.assumeIsolated pattern to avoid sending non-Sendable Timer across actor boundaries in Swift 6
+- [Phase 03-video-upload-shell]: AVPlayer owned by parent view — VideoPlayerView consumes it — enables Phase 5 external playback control
 
 ### Pending Todos
 
@@ -98,6 +102,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-03T18:37:44.602Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-video-upload-shell/03-CONTEXT.md
+Last session: 2026-03-03T18:53:59.629Z
+Stopped at: Completed 03-video-upload-shell 03-01-PLAN.md
+Resume file: None
