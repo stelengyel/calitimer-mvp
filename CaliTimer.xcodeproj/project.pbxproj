@@ -21,6 +21,7 @@
 		6FC1B68A4E39AB8F7D216F3C /* Hold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AEA216E1F1B56194159D39 /* Hold.swift */; };
 		77CC2D8222280F2D65D1B6C8 /* DrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D4267026132D87F55DB2A5 /* DrawerView.swift */; };
 		8F4A89813C60EDE02FD15E3E /* SkillPersonalBest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CE6930C77358EF084B69A /* SkillPersonalBest.swift */; };
+		93EFD58814361A7E5A760C6E /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6FAF73C2B6DC259C7CB62E /* VideoPlayerView.swift */; };
 		9F80E9C60D58E7106C15B052 /* JetBrainsMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 731BC575082FE8FCE9950A8D /* JetBrainsMono-Bold.ttf */; };
 		A2E16DEF92EB51E4ACE7E8BF /* SessionConfigSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6DB5183C51854F49EED4E7 /* SessionConfigSheet.swift */; };
 		A72B51F79D887D9670EBE0D1 /* JetBrainsMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8DA22A5089AFF4237419854 /* JetBrainsMono-Regular.ttf */; };
@@ -55,6 +56,7 @@
 		CA3799D788BADC9431A96B84 /* CameraActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActor.swift; sourceTree = "<group>"; };
 		D7B54F20B2E007B07353AF1E /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
 		DBB3272524DA2FC68D1D6861 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		DF6FAF73C2B6DC259C7CB62E /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		E529E9BE3E0C0E92F0C70936 /* BrandFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandFonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,6 +89,7 @@
 			children = (
 				62824063662083DE997830D1 /* PHPickerCoordinator.swift */,
 				B381E9CCCF27FA9D95E7DC86 /* VideoImportManager.swift */,
+				DF6FAF73C2B6DC259C7CB62E /* VideoPlayerView.swift */,
 			);
 			path = Upload;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				8F4A89813C60EDE02FD15E3E /* SkillPersonalBest.swift in Sources */,
 				5F744930DBABD391D60E26DC /* UploadModeView.swift in Sources */,
 				E38C2A609E3A0E75035569E2 /* VideoImportManager.swift in Sources */,
+				93EFD58814361A7E5A760C6E /* VideoPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

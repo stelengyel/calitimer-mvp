@@ -24,6 +24,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>CaliTimer needs camera access to detect and time your handstand holds.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>CaliTimer reads videos from your photo library for offline handstand analysis.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>JetBrainsMono-Regular.ttf</string>

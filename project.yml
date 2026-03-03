@@ -45,6 +45,7 @@ targets:
           - JetBrainsMono-Regular.ttf
           - JetBrainsMono-Bold.ttf
         NSCameraUsageDescription: "CaliTimer needs camera access to detect and time your handstand holds."
+        NSPhotoLibraryUsageDescription: "CaliTimer reads videos from your photo library for offline handstand analysis."
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.calitimer.app
