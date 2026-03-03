@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 63;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,6 +25,8 @@
 		A2E16DEF92EB51E4ACE7E8BF /* SessionConfigSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6DB5183C51854F49EED4E7 /* SessionConfigSheet.swift */; };
 		A72B51F79D887D9670EBE0D1 /* JetBrainsMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8DA22A5089AFF4237419854 /* JetBrainsMono-Regular.ttf */; };
 		E0AEFB8502CB36535CE0D75B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034851B352105463549F3668 /* SettingsView.swift */; };
+		E2D05E2DC0CDB5D378EA295D /* PHPickerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62824063662083DE997830D1 /* PHPickerCoordinator.swift */; };
+		E38C2A609E3A0E75035569E2 /* VideoImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B381E9CCCF27FA9D95E7DC86 /* VideoImportManager.swift */; };
 		EA9DBF4BE5FF3A5DFDA58B9E /* CameraActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3799D788BADC9431A96B84 /* CameraActor.swift */; };
 		F25191481468DC369344B4D1 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6132500F8FFFA834A570BD /* Session.swift */; };
 /* End PBXBuildFile section */
@@ -32,13 +34,14 @@
 /* Begin PBXFileReference section */
 		034851B352105463549F3668 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0A7CE6930C77358EF084B69A /* SkillPersonalBest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillPersonalBest.swift; sourceTree = "<group>"; };
-		25F59B64677742565EE7B124 /* CaliTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaliTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		25F59B64677742565EE7B124 /* CaliTimer.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CaliTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D6DB5183C51854F49EED4E7 /* SessionConfigSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionConfigSheet.swift; sourceTree = "<group>"; };
 		2E1B651E95750212F3AA3E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		515D92EC8A55029DB719BC95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54D4267026132D87F55DB2A5 /* DrawerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerView.swift; sourceTree = "<group>"; };
 		5616339FAD517735EA760A3E /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		5D39DCB259B6EB56E5EC94AB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		62824063662083DE997830D1 /* PHPickerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHPickerCoordinator.swift; sourceTree = "<group>"; };
 		6AEFDD470BDF27AC5A12C332 /* UploadModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadModeView.swift; sourceTree = "<group>"; };
 		731BC575082FE8FCE9950A8D /* JetBrainsMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Bold.ttf"; sourceTree = "<group>"; };
 		82AEA216E1F1B56194159D39 /* Hold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hold.swift; sourceTree = "<group>"; };
@@ -47,6 +50,7 @@
 		8F2B3A3F4FA9E917010EF0D7 /* CaliTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaliTimerApp.swift; sourceTree = "<group>"; };
 		96C9F76F23D3372B00BAB94D /* BrandColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandColors.swift; sourceTree = "<group>"; };
 		A4BC430DA8BD91DECD30D166 /* LiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionView.swift; sourceTree = "<group>"; };
+		B381E9CCCF27FA9D95E7DC86 /* VideoImportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoImportManager.swift; sourceTree = "<group>"; };
 		C8DA22A5089AFF4237419854 /* JetBrainsMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Regular.ttf"; sourceTree = "<group>"; };
 		CA3799D788BADC9431A96B84 /* CameraActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActor.swift; sourceTree = "<group>"; };
 		D7B54F20B2E007B07353AF1E /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
@@ -76,6 +80,15 @@
 				B44EA63C863B88EC1A04E188 /* Upload */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		2FBABCAA4E7F988E03EA69BD /* Upload */ = {
+			isa = PBXGroup;
+			children = (
+				62824063662083DE997830D1 /* PHPickerCoordinator.swift */,
+				B381E9CCCF27FA9D95E7DC86 /* VideoImportManager.swift */,
+			);
+			path = Upload;
 			sourceTree = "<group>";
 		};
 		55EA944B22E6B73C52E281CF /* App */ = {
@@ -121,6 +134,7 @@
 				CDE382839CD9871956F2BD2F /* Resources */,
 				D652C8418E26391069AEEC9C /* Storage */,
 				14766432DEF3D9C2A8C684C9 /* UI */,
+				2FBABCAA4E7F988E03EA69BD /* Upload */,
 			);
 			path = CaliTimer;
 			sourceTree = "<group>";
@@ -246,6 +260,7 @@
 			);
 			mainGroup = C49E6BB2A8E1B44F50FE8B2C;
 			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -284,11 +299,13 @@
 				6FC1B68A4E39AB8F7D216F3C /* Hold.swift in Sources */,
 				17BED22F0211DD1CE67260A5 /* HomeView.swift in Sources */,
 				5F781B573203995E6B481BC7 /* LiveSessionView.swift in Sources */,
+				E2D05E2DC0CDB5D378EA295D /* PHPickerCoordinator.swift in Sources */,
 				F25191481468DC369344B4D1 /* Session.swift in Sources */,
 				A2E16DEF92EB51E4ACE7E8BF /* SessionConfigSheet.swift in Sources */,
 				E0AEFB8502CB36535CE0D75B /* SettingsView.swift in Sources */,
 				8F4A89813C60EDE02FD15E3E /* SkillPersonalBest.swift in Sources */,
 				5F744930DBABD391D60E26DC /* UploadModeView.swift in Sources */,
+				E38C2A609E3A0E75035569E2 /* VideoImportManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,7 +376,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UFGH7H2T8U;
 				INFOPLIST_FILE = CaliTimer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -444,7 +460,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UFGH7H2T8U;
 				INFOPLIST_FILE = CaliTimer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
