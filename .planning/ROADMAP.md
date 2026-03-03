@@ -63,7 +63,11 @@ Plans:
   1. User can tap an import action and the PHPicker sheet appears with video-only filtering
   2. After selecting a video, it loads into the in-app player and plays back correctly
   3. The upload screen has clearly designated space for detection output (holds list, skill label) even though that area is empty/placeholder at this stage — Phase 5 can wire into it without layout changes
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — VideoImportManager (@MainActor ObservableObject) + PHPickerSheet (UIViewControllerRepresentable) + VideoPlayerView (adaptive aspect ratio, controls)
+- [ ] 03-02-PLAN.md — Wire components into UploadModeView (3-zone state machines), add NSPhotoLibraryUsageDescription to project.yml, build + human verify
 
 ### Phase 4: Pose Detection
 **Goal**: Raw pose data flows from the Vision framework into the app on both live camera frames and imported video frames, and the skeleton overlay renders correctly on the camera feed — no hold classification or state machine yet, just verified pose data
@@ -140,7 +144,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 |-------|----------------|--------|-----------|
 | 1. App Layout & Navigation | 3/3 | Complete | 2026-03-01 |
 | 2. Camera Setup + Session View | 3/3 | Complete | 2026-03-02 |
-| 3. Video Upload Shell | 0/TBD | Not started | - |
+| 3. Video Upload Shell | 0/2 | Not started | - |
 | 4. Pose Detection | 0/TBD | Not started | - |
 | 5. Handstand Detection + Timer | 0/TBD | Not started | - |
 | 6. Session History & Personal Bests | 0/TBD | Not started | - |
