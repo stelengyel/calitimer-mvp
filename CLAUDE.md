@@ -21,3 +21,7 @@ Use Context7 when:
 - Implementing or referencing a specific API (e.g. `VNDetectHumanBodyPoseRequest`, `AVAssetWriter`, `@ModelActor`, `PHPickerViewController`)
 - The correct usage isn't already established in the planning docs (STACK.md, RESEARCH.md, PLAN.md)
 - A known caveat or version difference is relevant (e.g. iOS 17 vs 18 Vision API)
+
+
+## Swift / iOS Development
+When working with Swift 6 concurrency, prefer @MainActor over custom global actors like @CameraActor to avoid compiler bugs. Always verify builds after concurrency changes.

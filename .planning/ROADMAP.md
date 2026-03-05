@@ -12,7 +12,7 @@ CaliTimer ships in 9 phases ordered by dependency and risk. The first phase esta
 
 - [x] **Phase 1: App Layout & Navigation** - Screen shells, tab/nav structure, navigation plumbing — no features, just a real app skeleton that builds and runs
 - [x] **Phase 2: Camera Setup + Session View** - Live camera feed in app, session start/end controls, front/rear camera switch
-- [ ] **Phase 3: Video Upload Shell** - PHPicker import, video playback UI scaffold (detection not wired yet)
+- [x] **Phase 3: Video Upload Shell** - PHPicker import, video playback UI scaffold (detection not wired yet)
 - [ ] **Phase 4: Pose Detection** - Vision framework running on live and uploaded frames, skeleton overlay rendered and toggleable
 - [ ] **Phase 5: Handstand Detection + Timer** - HoldStateMachine, live timer, detection indicator, haptic/visual alert, target duration, detection wired to imported video
 - [ ] **Phase 6: Session History & Personal Bests** - SwiftData schema, session history log, personal best tracking
@@ -66,8 +66,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — VideoImportManager (@MainActor ObservableObject) + PHPickerSheet (UIViewControllerRepresentable) + VideoPlayerView (adaptive aspect ratio, controls)
-- [ ] 03-02-PLAN.md — Wire components into UploadModeView (3-zone state machines), add NSPhotoLibraryUsageDescription to project.yml, build + human verify
+- [x] 03-01-PLAN.md — VideoImportManager (@MainActor ObservableObject) + PHPickerSheet (UIViewControllerRepresentable) + VideoPlayerView (adaptive aspect ratio, controls)
+- [x] 03-02-PLAN.md — Wire components into UploadModeView (3-zone state machines), add NSPhotoLibraryUsageDescription to project.yml, build + human verify
 
 ### Phase 4: Pose Detection
 **Goal**: Raw pose data flows from the Vision framework into the app on both live camera frames and imported video frames, and the skeleton overlay renders correctly on the camera feed — no hold classification or state machine yet, just verified pose data

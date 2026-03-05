@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 03-video-upload-shell 03-01-PLAN.md
-last_updated: "2026-03-03T18:53:59.630Z"
-last_activity: "2026-03-03 — Phase 2 closed: sublayer camera fix, all UAT confirmed, verification written"
+status: in-progress
+stopped_at: Completed 03-video-upload-shell 03-02-PLAN.md
+last_updated: "2026-03-03T19:10:51Z"
+last_activity: "2026-03-03 — Phase 3 Plan 2 complete: UploadModeView wired, PHPicker import + AVPlayer playback human verified on simulator"
 progress:
   total_phases: 9
   completed_phases: 0
   total_plans: 2
-  completed_plans: 1
-  percent: 22
+  completed_plans: 2
+  percent: 25
 ---
 
 # Project State
@@ -25,19 +25,19 @@ See: .planning/PROJECT.md (updated 2026-03-01)
 
 ## Current Position
 
-Phase: 2 of 9 phases complete — Phase 3 (Video Upload Shell) is next
-Plan: 6 of 6 plans complete across Phases 1–2
-Status: Phase 2 COMPLETE — all 3 plans done, all 4 requirements satisfied (CAMR-01, CAMR-02, SESS-01, SESS-02), PHASE-02-VERIFICATION.md written
-Last activity: 2026-03-03 — Phase 2 closed: sublayer camera fix, all UAT confirmed, verification written
+Phase: Phase 3 (Video Upload Shell) — 2 of 2 plans complete, phase DONE
+Plan: 8 of 8 plans complete across Phases 1–3
+Status: Phase 3 COMPLETE — both plans done, VIDU-01 satisfied, human verification approved
+Last activity: 2026-03-03 — UploadModeView wired with full 3-zone state machine; PHPicker + AVPlayer playback verified on simulator
 
-Progress: [██░░░░░░░░] 22% (2 of 9 phases complete)
+Progress: [███░░░░░░░] 33% (3 of 9 phases complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
-- Average duration: ~9 min/plan
-- Total execution time: ~36 min (Phase 1) + ~17 min (Phase 2) = ~53 min
+- Total plans completed: 8
+- Average duration: ~8 min/plan
+- Total execution time: ~36 min (Phase 1) + ~17 min (Phase 2) + ~22 min (Phase 3) = ~75 min
 
 **By Phase:**
 
@@ -45,6 +45,7 @@ Progress: [██░░░░░░░░] 22% (2 of 9 phases complete)
 |-------|-------|-------|----------|
 | 01-app-layout-navigation | 3 | ~36 min | ~12 min |
 | 02-camera-setup-session-view | 3 | ~17 min | ~6 min |
+| 03-video-upload-shell | 2 | ~22 min | ~11 min |
 
 **Recent Trend:**
 - Last 5 plans: P01 (18min), P02 (3min), P03 (15min), 02-P01 (10min), 02-P02 (2min), 02-P03 (5min)
@@ -58,6 +59,7 @@ Progress: [██░░░░░░░░] 22% (2 of 9 phases complete)
 | Phase 02-camera-setup-session-view P02 | 2 | 2 tasks | 6 files |
 | Phase 02-camera-setup-session-view P03 | 5 | 2 tasks | 1 file |
 | Phase 03-video-upload-shell P01 | 4 | 2 tasks | 4 files |
+| Phase 03-video-upload-shell P02 | 18 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -88,6 +90,8 @@ Recent decisions affecting current work:
 - [Phase 03-video-upload-shell]: handlePickerResult is async to satisfy @MainActor call from Task { @MainActor in } in PHPickerSheet.Coordinator
 - [Phase 03-video-upload-shell]: Timer stored on self (not captured in closure) + MainActor.assumeIsolated pattern to avoid sending non-Sendable Timer across actor boundaries in Swift 6
 - [Phase 03-video-upload-shell]: AVPlayer owned by parent view — VideoPlayerView consumes it — enables Phase 5 external playback control
+- [Phase 03-video-upload-shell]: Zone 3 outer ZStack structure is a Phase 5 stability contract — inner content replaced by Phase 5 holds list, outer layout must not change
+- [Phase 03-video-upload-shell]: Long video warning (>30 min) uses Task.sleep(0.5s) before asset.load(.duration) to wait for AVPlayerItem readiness before reading asset properties
 
 ### Pending Todos
 
@@ -102,6 +106,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-03T18:53:59.629Z
-Stopped at: Completed 03-video-upload-shell 03-01-PLAN.md
+Last session: 2026-03-03T19:10:51Z
+Stopped at: Completed 03-video-upload-shell 03-02-PLAN.md
 Resume file: None
