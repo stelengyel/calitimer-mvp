@@ -13,10 +13,23 @@ final class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
 
     private static let queue = DispatchQueue(label: "com.calitimer.camera", qos: .userInitiated)
 
+    // MARK: - Video output queue (separate from camera queue to avoid blocking)
+
+    private static let videoOutputQueue = DispatchQueue(label: "com.calitimer.videoOutput", qos: .userInitiated)
+
     // MARK: - Session (nonisolated(unsafe) — only touched on queue or during config from MainActor)
 
     nonisolated(unsafe) private let session = AVCaptureSession()
     nonisolated(unsafe) private var currentInput: AVCaptureDeviceInput?
+
+    // MARK: - Video output (nonisolated(unsafe) — configured on MainActor, read on videoOutputQueue)
+
+    nonisolated(unsafe) private var videoOutput: AVCaptureVideoDataOutput?
+
+    // MARK: - Vision processor
+
+    /// Pose detection engine. Created once; accessible from LiveSessionView via cameraManager.visionProcessor.
+    let visionProcessor = VisionProcessor()
 
     // MARK: - Preview
 
@@ -108,6 +121,17 @@ final class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
         // Connect session to preview layer on MainActor before starting
         previewLayer.session = session
 
+        // Add video data output for Vision frame processing
+        let output = AVCaptureVideoDataOutput()
+        output.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange]
+        output.alwaysDiscardsLateVideoFrames = true
+        // Delegate is nonisolated — CameraManager is @unchecked Sendable, safe
+        output.setSampleBufferDelegate(self, queue: Self.videoOutputQueue)
+        if session.canAddOutput(output) {
+            session.addOutput(output)
+            self.videoOutput = output
+        }
+
         // startRunning() blocks — dispatch off main thread
         let s = session
         await withCheckedContinuation { continuation in
@@ -116,5 +140,17 @@ final class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
                 continuation.resume()
             }
         }
+    }
+}
+
+// MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
+
+extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
+    /// Called on videoOutputQueue by AVFoundation. Must be nonisolated — not on MainActor.
+    /// VisionProcessor.process() is nonisolated, so it can be called directly from here.
+    nonisolated func captureOutput(_ output: AVCaptureOutput,
+                                   didOutput sampleBuffer: CMSampleBuffer,
+                                   from connection: AVCaptureConnection) {
+        visionProcessor.process(sampleBuffer: sampleBuffer)
     }
 }
