@@ -29,6 +29,11 @@ final class VideoImportManager: ObservableObject {
     /// True after a video has been successfully loaded (videoURL != nil).
     var hasVideo: Bool { videoURL != nil }
 
+    // MARK: - Vision
+
+    /// VisionProcessor for upload mode — @MainActor isolated, matches VisionProcessor declaration.
+    let visionProcessor = VisionProcessor()
+
     // MARK: - Internal
 
     /// Tracks the active download progress so it can be cancelled or observed.
@@ -38,6 +43,13 @@ final class VideoImportManager: ObservableObject {
     /// invalidation without capturing the timer across actor boundaries.
     private var progressTimer: Timer?
 
+    /// AVPlayerItemVideoOutput for pixel buffer extraction from the video frames.
+    /// nonisolated(unsafe) because AVPlayerItemVideoOutput cannot cross actor boundaries.
+    nonisolated(unsafe) private var videoOutput: AVPlayerItemVideoOutput?
+
+    /// Periodic time observer token for ~30fps frame polling. Must be removed before dealloc.
+    private var frameObserverToken: Any?
+
     // MARK: - Import
 
     /// Called by PHPickerSheet after the user picks a video (or cancels).
@@ -46,6 +58,7 @@ final class VideoImportManager: ObservableObject {
 
         // Reset previous state
         stopProgressTimer()
+        detachVideoOutput()
         videoURL = nil
         player = nil
         importError = nil
@@ -96,6 +109,7 @@ final class VideoImportManager: ObservableObject {
                 case .success(let dest):
                     self.videoURL = dest
                     self.player = AVPlayer(playerItem: AVPlayerItem(url: dest))
+                    self.attachVideoOutput(to: self.player!)
                 case .failure(let err):
                     self.importError = "Could not prepare video: \(err.localizedDescription)"
                 }
@@ -107,6 +121,72 @@ final class VideoImportManager: ObservableObject {
         // Poll progress on main RunLoop — NSProgress KVO is not MainActor-safe in Swift 6.
         // Timer is stored on self so the callback never captures `timer` across actor boundaries.
         startProgressTimer(progress)
+    }
+
+    // MARK: - Video Output / Frame Processing
+
+    /// Attach an AVPlayerItemVideoOutput to the given player and start polling frames at ~30fps.
+    /// Called immediately after player creation in handlePickerResult.
+    private func attachVideoOutput(to player: AVPlayer) {
+        // Remove any previous output before attaching a new one
+        detachVideoOutput()
+
+        let outputSettings: [String: Any] = [
+            kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
+        ]
+        let output = AVPlayerItemVideoOutput(pixelBufferAttributes: outputSettings)
+        self.videoOutput = output
+        player.currentItem?.add(output)
+
+        // Poll every ~33ms (~30fps) — matches typical video frame rate.
+        // Vision will process on a background thread via Task.detached (nonisolated process()).
+        let interval = CMTime(seconds: 0.033, preferredTimescale: 600)
+        frameObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+            MainActor.assumeIsolated {
+                self?.processCurrentFrame(at: time)
+            }
+        }
+    }
+
+    /// Extract the current video frame at `time` and send it to VisionProcessor.
+    /// hasNewPixelBuffer returns false when paused — naturally holds the last skeleton on screen.
+    private func processCurrentFrame(at time: CMTime) {
+        guard let output = videoOutput,
+              output.hasNewPixelBuffer(forItemTime: time) else { return }
+
+        guard let pixelBuffer = output.copyPixelBuffer(forItemTime: time, itemTimeForDisplay: nil) else { return }
+
+        // Wrap CVPixelBuffer in CMSampleBuffer for VNSequenceRequestHandler
+        var timing = CMSampleTimingInfo(duration: .invalid, presentationTimeStamp: time, decodeTimeStamp: .invalid)
+        var formatDescription: CMFormatDescription?
+        CMVideoFormatDescriptionCreateForImageBuffer(allocator: nil, imageBuffer: pixelBuffer, formatDescriptionOut: &formatDescription)
+        guard let formatDescription else { return }
+
+        var sampleBuffer: CMSampleBuffer?
+        CMSampleBufferCreateReadyWithImageBuffer(
+            allocator: nil,
+            imageBuffer: pixelBuffer,
+            formatDescription: formatDescription,
+            sampleTiming: &timing,
+            sampleBufferOut: &sampleBuffer
+        )
+        guard let sampleBuffer else { return }
+
+        // process() is nonisolated — dispatch to a background thread to keep Main thread free
+        let processor = visionProcessor
+        Task.detached {
+            processor.process(sampleBuffer: sampleBuffer)
+        }
+    }
+
+    /// Remove the video output and stop the periodic observer. Called before attaching a new one
+    /// and in the reset block at the top of handlePickerResult.
+    private func detachVideoOutput() {
+        if let token = frameObserverToken, let player {
+            player.removeTimeObserver(token)
+            frameObserverToken = nil
+        }
+        videoOutput = nil
     }
 
     // MARK: - Private
