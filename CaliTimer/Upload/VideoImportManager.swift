@@ -63,6 +63,28 @@ final class VideoImportManager: ObservableObject {
         let progress = provider.loadFileRepresentation(
             forTypeIdentifier: "public.movie"
         ) { [weak self] url, error in
+            // Copy the file synchronously here — the system-provided URL is only
+            // valid for the duration of this callback. Dispatching async before
+            // copying can result in the URL being invalidated before we use it,
+            // which causes the first pick after a fresh launch to silently fail.
+            let importResult: Result<URL, Error>
+            if let error {
+                importResult = .failure(error)
+            } else if let url {
+                let dest = FileManager.default.temporaryDirectory
+                    .appendingPathComponent(UUID().uuidString)
+                    .appendingPathExtension(url.pathExtension)
+                do {
+                    try FileManager.default.copyItem(at: url, to: dest)
+                    importResult = .success(dest)
+                } catch {
+                    importResult = .failure(error)
+                }
+            } else {
+                importResult = .failure(NSError(domain: "VideoImport", code: -1,
+                    userInfo: [NSLocalizedDescriptionKey: "Could not load video."]))
+            }
+
             DispatchQueue.main.async {
                 guard let self else { return }
                 self.stopProgressTimer()
@@ -70,25 +92,12 @@ final class VideoImportManager: ObservableObject {
                 self.downloadProgress = 0
                 self.progressObservation = nil
 
-                if let error {
-                    self.importError = "Could not load video. \(error.localizedDescription)"
-                    return
-                }
-                guard let url else {
-                    self.importError = "Could not load video."
-                    return
-                }
-                // Copy to app's temp directory — the system-provided URL
-                // is only valid during this callback.
-                let dest = FileManager.default.temporaryDirectory
-                    .appendingPathComponent(UUID().uuidString)
-                    .appendingPathExtension(url.pathExtension)
-                do {
-                    try FileManager.default.copyItem(at: url, to: dest)
+                switch importResult {
+                case .success(let dest):
                     self.videoURL = dest
                     self.player = AVPlayer(playerItem: AVPlayerItem(url: dest))
-                } catch {
-                    self.importError = "Could not prepare video: \(error.localizedDescription)"
+                case .failure(let err):
+                    self.importError = "Could not prepare video: \(err.localizedDescription)"
                 }
             }
         }
