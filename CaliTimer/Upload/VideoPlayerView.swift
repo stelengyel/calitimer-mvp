@@ -2,8 +2,8 @@ import SwiftUI
 import AVFoundation
 import AVKit
 
-/// SwiftUI video player with adaptive aspect ratio, play/pause, seek scrubber, and time labels.
-/// The parent owns the AVPlayer instance and passes it in — Phase 5 can control playback externally.
+/// Full-screen video player with overlaid scrubber and play/pause controls.
+/// The parent owns the AVPlayer instance and passes it in.
 struct VideoPlayerView: View {
     let player: AVPlayer
 
@@ -11,108 +11,108 @@ struct VideoPlayerView: View {
     @State private var duration: Double = 0
     @State private var currentTime: Double = 0
     @State private var isBuffering: Bool = false
-    @State private var naturalSize: CGSize = CGSize(width: 16, height: 9)
+    @State private var naturalSize: CGSize = CGSize(width: 9, height: 16)
     @State private var timeObserver: Any?
     @State private var itemObserver: NSKeyValueObservation?
 
     var body: some View {
-        VStack(spacing: 0) {
-            // Video surface — adaptive aspect ratio
-            ZStack {
-                AVPlayerLayerView(player: player, naturalSize: $naturalSize)
-                    .aspectRatio(naturalSize.width / naturalSize.height, contentMode: .fit)
-                    .background(Color.black)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+        ZStack(alignment: .bottom) {
+            // Video surface — fills all available space, letterboxed by AVPlayerLayer
+            AVPlayerLayerView(player: player, naturalSize: $naturalSize)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.black)
 
-                // Buffering indicator
-                if isBuffering {
-                    ProgressView()
-                        .tint(Color.textPrimary)
-                        .scaleEffect(1.2)
-                }
+            if isBuffering {
+                ProgressView()
+                    .tint(.white)
+                    .scaleEffect(1.2)
             }
 
-            // Controls row
-            VStack(spacing: 8) {
-                // Scrubber
-                Slider(
-                    value: $currentTime,
-                    in: 0...max(duration, 1),
-                    onEditingChanged: { editing in
-                        if !editing {
-                            let target = CMTime(seconds: currentTime, preferredTimescale: 600)
-                            player.seek(to: target, toleranceBefore: .zero, toleranceAfter: .zero)
-                        }
-                    }
-                )
-                .tint(Color.brandEmber)
-
-                // Time labels + play/pause
-                HStack {
-                    Text(formatTime(currentTime))
-                        .font(.mono(11))
-                        .foregroundStyle(Color.textSecondary)
-                        .monospacedDigit()
-
-                    Spacer()
-
-                    Button {
-                        if isPlaying {
-                            player.pause()
-                        } else {
-                            player.play()
-                        }
-                        isPlaying.toggle()
-                    } label: {
-                        Image(systemName: isPlaying ? "pause.fill" : "play.fill")
-                            .font(.system(size: 20))
-                            .foregroundStyle(Color.brandEmber)
-                            .frame(width: 44, height: 44)
-                    }
-
-                    Spacer()
-
-                    Text(formatTime(duration))
-                        .font(.mono(11))
-                        .foregroundStyle(Color.textSecondary)
-                        .monospacedDigit()
-                }
-            }
-            .padding(.horizontal, 4)
-            .padding(.top, 8)
+            // Bottom controls overlay
+            controlsOverlay
         }
         .onAppear { setupObservers() }
         .onDisappear { teardownObservers() }
     }
 
-    // MARK: - Private
+    // MARK: - Controls
+
+    private var controlsOverlay: some View {
+        VStack(spacing: 6) {
+            Slider(
+                value: $currentTime,
+                in: 0...max(duration, 1),
+                onEditingChanged: { editing in
+                    if !editing {
+                        let target = CMTime(seconds: currentTime, preferredTimescale: 600)
+                        player.seek(to: target, toleranceBefore: .zero, toleranceAfter: .zero)
+                    }
+                }
+            )
+            .tint(Color.brandEmber)
+
+            HStack {
+                Text(formatTime(currentTime))
+                    .font(.mono(11))
+                    .foregroundStyle(.white.opacity(0.7))
+                    .monospacedDigit()
+
+                Spacer()
+
+                Button {
+                    if isPlaying { player.pause() } else { player.play() }
+                    isPlaying.toggle()
+                } label: {
+                    Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                        .font(.system(size: 22))
+                        .foregroundStyle(.white)
+                        .frame(width: 44, height: 44)
+                }
+
+                Spacer()
+
+                Text(formatTime(duration))
+                    .font(.mono(11))
+                    .foregroundStyle(.white.opacity(0.7))
+                    .monospacedDigit()
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.top, 24)
+        .padding(.bottom, 20)
+        .background(
+            LinearGradient(
+                colors: [.clear, .black.opacity(0.75)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
+    }
+
+    // MARK: - Observers
 
     private func setupObservers() {
-        // Periodic time update for scrubber
         let interval = CMTime(seconds: 0.25, preferredTimescale: 600)
         timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { time in
             currentTime = time.seconds
         }
 
-        // Item status observation for duration + autoplay + naturalSize
         if let item = player.currentItem {
             itemObserver = item.observe(\.status, options: [.new]) { item, _ in
                 DispatchQueue.main.async {
                     if item.status == .readyToPlay {
                         duration = item.duration.seconds.isNaN ? 0 : item.duration.seconds
-                        // Adaptive aspect ratio from video track
                         if let track = item.tracks.first(where: { $0.assetTrack?.mediaType == .video }),
                            let assetTrack = track.assetTrack {
                             let size = assetTrack.naturalSize
-                            naturalSize = size.width > 0 && size.height > 0 ? size : CGSize(width: 16, height: 9)
+                            naturalSize = size.width > 0 && size.height > 0 ? size : CGSize(width: 9, height: 16)
                         }
                         isBuffering = false
-                        player.play()       // Autoplay on ready
+                        player.play()
                         isPlaying = true
                     }
                 }
             }
-            // Stop at end — observe playback-to-end notification
             NotificationCenter.default.addObserver(
                 forName: .AVPlayerItemDidPlayToEndTime,
                 object: item,
@@ -120,7 +120,6 @@ struct VideoPlayerView: View {
             ) { _ in
                 isPlaying = false
                 currentTime = 0
-                // Seek back to start but do NOT loop
                 player.seek(to: .zero)
             }
         }
@@ -141,8 +140,7 @@ struct VideoPlayerView: View {
     }
 }
 
-/// UIViewRepresentable that hosts an AVPlayerLayer.
-/// Separate from VideoPlayerView so the SwiftUI layout gets the correct aspect ratio frame.
+/// UIViewRepresentable that hosts an AVPlayerLayer, filling its frame.
 private struct AVPlayerLayerView: UIViewRepresentable {
     let player: AVPlayer
     @Binding var naturalSize: CGSize
