@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Phase 4 context gathered
-last_updated: "2026-03-06T15:24:19.493Z"
+stopped_at: Completed 04-pose-detection-01-PLAN.md
+last_updated: "2026-03-06T15:59:01.616Z"
 last_activity: 2026-03-03 — UploadModeView wired with full 3-zone state machine; PHPicker + AVPlayer playback verified on simulator
 progress:
   total_phases: 9
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  total_plans: 6
+  completed_plans: 3
   percent: 33
 ---
 
@@ -60,6 +60,7 @@ Progress: [███░░░░░░░] 33% (3 of 9 phases complete)
 | Phase 02-camera-setup-session-view P03 | 5 | 2 tasks | 1 file |
 | Phase 03-video-upload-shell P01 | 4 | 2 tasks | 4 files |
 | Phase 03-video-upload-shell P02 | 18 | 2 tasks | 4 files |
+| Phase 04-pose-detection P01 | 8 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -92,6 +93,8 @@ Recent decisions affecting current work:
 - [Phase 03-video-upload-shell]: AVPlayer owned by parent view — VideoPlayerView consumes it — enables Phase 5 external playback control
 - [Phase 03-video-upload-shell]: Zone 3 outer ZStack structure is a Phase 5 stability contract — inner content replaced by Phase 5 holds list, outer layout must not change
 - [Phase 03-video-upload-shell]: Long video warning (>30 min) uses Task.sleep(0.5s) before asset.load(.duration) to wait for AVPlayerItem readiness before reading asset properties
+- [Phase 04-pose-detection]: VisionProcessor uses @CameraActor isolation per plan contract — nonisolated(unsafe) + Task { @MainActor in } bridges to SwiftUI bindings
+- [Phase 04-pose-detection]: project.yml requires no Vision group entry — path: CaliTimer is recursive, XcodeGen picks up Vision/ subdirectory automatically
 
 ### Pending Todos
 
@@ -106,6 +109,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-06T15:24:19.491Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-pose-detection/04-CONTEXT.md
+Last session: 2026-03-06T15:59:01.613Z
+Stopped at: Completed 04-pose-detection-01-PLAN.md
+Resume file: None

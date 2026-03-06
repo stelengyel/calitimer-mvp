@@ -11,7 +11,7 @@
 - [ ] **DETE-02**: Hold state machine transitions through searching → detected → timing → hold ended with debounce (10–15 frame threshold to prevent phantom holds)
 - [ ] **DETE-03**: Detection state indicator shown on screen with 3 distinct visual states (searching / detected / timing), independently toggleable
 - [ ] **DETE-04**: Timer counts up during active hold, visible on screen in real-time
-- [ ] **DETE-05**: Skeleton overlay rendered on camera feed, independently toggleable
+- [x] **DETE-05**: Skeleton overlay rendered on camera feed, independently toggleable
 - [ ] **DETE-06**: Visual and haptic alert fires when user-set target hold duration is reached
 - [ ] **DETE-07**: User can set target hold duration on-the-fly during a session (no pre-session config required)
 
@@ -86,7 +86,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SESS-01 | Phase 2 | Complete |
 | SESS-02 | Phase 2 | Complete |
 | VIDU-01 | Phase 3 | Complete |
-| DETE-05 | Phase 4 | Pending |
+| DETE-05 | Phase 4 | Complete |
 | DETE-01 | Phase 5 | Pending |
 | DETE-02 | Phase 5 | Pending |
 | DETE-03 | Phase 5 | Pending |
