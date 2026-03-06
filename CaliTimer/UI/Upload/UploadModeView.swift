@@ -73,7 +73,7 @@ struct UploadModeView: View {
                             width: d.width * scale, height: d.height * scale)
             detectedJoints = joints.mapValues { pt in
                 let ox = vr.minX + (1.0 - pt.y) * vr.width
-                let oy = vr.minY + pt.x * vr.height
+                let oy = vr.minY + (1.0 - pt.x) * vr.height
                 return CGPoint(x: ox / s.width, y: 1.0 - oy / s.height)
             }
         }
