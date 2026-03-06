@@ -97,7 +97,21 @@ struct LiveSessionView: View {
             cameraManager.stopSession()
         }
         .onReceive(cameraManager.visionProcessor.$detectedPose) { pose in
-            detectedJoints = pose?.joints ?? [:]
+            guard let joints = pose?.joints, !joints.isEmpty else {
+                detectedJoints = [:]
+                return
+            }
+            // AVCaptureVideoDataOutput delivers native landscape sensor buffers.
+            // AVCaptureVideoPreviewLayer auto-rotates the preview but Vision coords are raw.
+            // Remap landscape Vision coords → portrait Vision coords so SkeletonOverlayView
+            // renders correctly over the portrait preview.
+            //
+            // Back camera (90° CCW to portrait): new_vx = 1-vy, new_vy = vx
+            // Front camera (90° CW + mirror):    new_vx = 1-vy, new_vy = 1-vx
+            let front = cameraManager.isFrontCamera
+            detectedJoints = joints.mapValues { pt in
+                CGPoint(x: 1 - pt.y, y: front ? 1 - pt.x : pt.x)
+            }
         }
         .sheet(isPresented: $showingConfigSheet) {
             SessionConfigSheet(skeletonPref: skeletonPref) { skill, targetDuration in

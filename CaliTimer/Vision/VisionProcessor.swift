@@ -48,14 +48,14 @@ final class VisionProcessor: ObservableObject {
 
     /// Process a single camera frame for human body pose.
     /// nonisolated — called from AVCaptureVideoDataOutputSampleBufferDelegate on a background thread.
-    /// orientation: sensor orientation hint for Vision. Back camera = .right, front = .left, video = .up.
-    nonisolated func process(sampleBuffer: CMSampleBuffer,
-                             orientation: CGImagePropertyOrientation = .up) {
+    /// Outputs normalized Vision coords in raw sensor space (landscape for camera, display-space for video).
+    /// Callers are responsible for remapping coords to their view coordinate space.
+    nonisolated func process(sampleBuffer: CMSampleBuffer) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         let request = VNDetectHumanBodyPoseRequest()
 
         do {
-            try requestHandler.perform([request], on: pixelBuffer, orientation: orientation)
+            try requestHandler.perform([request], on: pixelBuffer)
         } catch {
             // Failed to perform request — publish nil and return
             print("[Vision] perform error: \(error)")

@@ -41,6 +41,9 @@ final class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
     /// True when camera permission was denied or restricted.
     @Published var permissionDenied: Bool = false
 
+    /// True when the front camera is active. Used by LiveSessionView to remap Vision coords.
+    @Published var isFrontCamera: Bool = false
+
     // MARK: - Init
 
     override init() {
@@ -84,6 +87,7 @@ final class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
         guard let currentInput else { return }
         let currentPosition = currentInput.device.position
         let newPosition: AVCaptureDevice.Position = currentPosition == .back ? .front : .back
+        isFrontCamera = (newPosition == .front)
 
         guard let newDevice = AVCaptureDevice.default(.builtInWideAngleCamera,
                                                        for: .video,
@@ -151,12 +155,6 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
     nonisolated func captureOutput(_ output: AVCaptureOutput,
                                    didOutput sampleBuffer: CMSampleBuffer,
                                    from connection: AVCaptureConnection) {
-        // AVCaptureVideoDataOutput delivers native sensor buffers (landscape), regardless of
-        // videoRotationAngle on the connection. Must hint Vision with the correct orientation.
-        // Back camera: scene top maps to right edge → .right (90° CCW correction)
-        // Front camera: scene top maps to left edge → .left (90° CW correction)
-        let position = currentInput?.device.position ?? .back
-        let orientation: CGImagePropertyOrientation = position == .front ? .left : .right
-        visionProcessor.process(sampleBuffer: sampleBuffer, orientation: orientation)
+        visionProcessor.process(sampleBuffer: sampleBuffer)
     }
 }
