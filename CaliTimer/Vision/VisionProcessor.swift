@@ -51,12 +51,14 @@ final class VisionProcessor: ObservableObject {
     /// orientation: sensor orientation hint for Vision. Back camera = .right, front = .left, video = .up.
     nonisolated func process(sampleBuffer: CMSampleBuffer,
                              orientation: CGImagePropertyOrientation = .up) {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         let request = VNDetectHumanBodyPoseRequest()
 
         do {
-            try requestHandler.perform([request], on: sampleBuffer, orientation: orientation)
+            try requestHandler.perform([request], on: pixelBuffer, orientation: orientation)
         } catch {
             // Failed to perform request — publish nil and return
+            print("[Vision] perform error: \(error)")
             Task { @MainActor in
                 self.detectedPose = nil
             }
