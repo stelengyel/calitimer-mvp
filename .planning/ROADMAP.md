@@ -78,7 +78,13 @@ Plans:
   2. The skeleton overlay can be toggled on and off independently without affecting any other UI element
   3. VNDetectHumanBodyPoseRequest runs against frames from an imported video and produces joint coordinate output (confirmed via debug log or overlay on video thumbnail)
   4. No frame drops or UI freezes observed during sustained live pose estimation on device
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — VisionProcessor (@CameraActor, VNSequenceRequestHandler, DetectedPose) + SkeletonOverlayView (Canvas renderer) + SkeletonPreference (UserDefaults toggle)
+- [ ] 04-02-PLAN.md — AVCaptureVideoDataOutput in CameraManager + skeleton overlay in LiveSessionView + toggle in SessionConfigSheet + SettingsView
+- [ ] 04-03-PLAN.md — AVPlayerItemVideoOutput in VideoImportManager + skeleton overlay in UploadModeView
+- [ ] 04-04-PLAN.md — Build on device + human verify all four success criteria
 
 ### Phase 5: Handstand Detection + Timer
 **Goal**: The app detects handstand holds automatically, counts up a live timer during each hold, alerts the athlete at their target duration, and produces the same hold-with-timestamp output from an imported video — this is the core product and must be validated thoroughly before proceeding
@@ -144,8 +150,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 |-------|----------------|--------|-----------|
 | 1. App Layout & Navigation | 3/3 | Complete | 2026-03-01 |
 | 2. Camera Setup + Session View | 3/3 | Complete | 2026-03-02 |
-| 3. Video Upload Shell | 1/2 | In Progress|  |
-| 4. Pose Detection | 0/TBD | Not started | - |
+| 3. Video Upload Shell | 2/2 | Complete | 2026-03-03 |
+| 4. Pose Detection | 0/4 | Not started | - |
 | 5. Handstand Detection + Timer | 0/TBD | Not started | - |
 | 6. Session History & Personal Bests | 0/TBD | Not started | - |
 | 7. Video Capture | 0/TBD | Not started | - |
