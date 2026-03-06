@@ -3,6 +3,7 @@ import SwiftUI
 struct UploadModeView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var manager = VideoImportManager()
+    @StateObject private var skeletonPref = SkeletonPreference()
     @State private var showPicker = false
 
     var body: some View {
@@ -10,8 +11,23 @@ struct UploadModeView: View {
             Color.black.ignoresSafeArea()
 
             if let player = manager.player {
-                VideoPlayerView(player: player)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                ZStack {
+                    VideoPlayerView(player: player)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                    // Skeleton overlay on top of video — same pattern as LiveSessionView.
+                    // Controlled by the same SkeletonPreference toggle.
+                    if skeletonPref.isEnabled {
+                        GeometryReader { geo in
+                            SkeletonOverlayView(
+                                joints: manager.visionProcessor.detectedPose?.joints ?? [:],
+                                viewSize: geo.size
+                            )
+                        }
+                        .allowsHitTesting(false)
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 emptyState
             }
