@@ -1,17 +1,15 @@
 import SwiftUI
-import AVFoundation
 
 struct UploadModeView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var manager = VideoImportManager()
     @State private var showPicker = false
-    @State private var player: AVPlayer?
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            if let player {
+            if let player = manager.player {
                 VideoPlayerView(player: player)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
@@ -38,10 +36,6 @@ struct UploadModeView: View {
         .toolbarBackground(.hidden, for: .navigationBar)
         .sheet(isPresented: $showPicker) {
             PHPickerSheet(isPresented: $showPicker, manager: manager)
-        }
-        .onChange(of: manager.videoURL) { _, newURL in
-            guard let url = newURL else { player = nil; return }
-            player = AVPlayer(playerItem: AVPlayerItem(url: url))
         }
     }
 

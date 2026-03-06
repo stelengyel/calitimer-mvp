@@ -1,4 +1,5 @@
 import Foundation
+import AVFoundation
 import PhotosUI
 import SwiftUI
 
@@ -10,8 +11,11 @@ final class VideoImportManager: ObservableObject {
 
     // MARK: - Published state (UploadModeView reads these)
 
-    /// Set after a video finishes loading. Phase 5 observes this to start detection.
+    /// Set after a video finishes loading.
     @Published var videoURL: URL?
+
+    /// Ready-to-use player, created alongside videoURL in the same update.
+    @Published var player: AVPlayer?
 
     /// True while an iCloud asset is being downloaded locally.
     @Published var isDownloading: Bool = false
@@ -43,6 +47,7 @@ final class VideoImportManager: ObservableObject {
         // Reset previous state
         stopProgressTimer()
         videoURL = nil
+        player = nil
         importError = nil
         isDownloading = false
         downloadProgress = 0
@@ -81,6 +86,7 @@ final class VideoImportManager: ObservableObject {
                 do {
                     try FileManager.default.copyItem(at: url, to: dest)
                     self.videoURL = dest
+                    self.player = AVPlayer(playerItem: AVPlayerItem(url: dest))
                 } catch {
                     self.importError = "Could not prepare video: \(error.localizedDescription)"
                 }
