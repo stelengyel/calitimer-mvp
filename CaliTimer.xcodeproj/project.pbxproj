@@ -3,14 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 63;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0474D9B4E67C1B9A59A72362 /* VisionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC421C9F8BA71FA7BD3669D /* VisionProcessor.swift */; };
 		109771AAD7A50F4668A4FBC8 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB3272524DA2FC68D1D6861 /* CameraManager.swift */; };
 		17BED22F0211DD1CE67260A5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D39DCB259B6EB56E5EC94AB /* HomeView.swift */; };
 		3596F820A12E90EB45518F3A /* BrandColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C9F76F23D3372B00BAB94D /* BrandColors.swift */; };
 		39EF44E01074F5ED99976E4D /* BrandFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529E9BE3E0C0E92F0C70936 /* BrandFonts.swift */; };
+		3F18CB71E2C60E47AD28B77E /* SkeletonPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE25EFD24C01C01D5D4EF15 /* SkeletonPreference.swift */; };
 		3F4261D84FEBC9224D008629 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5616339FAD517735EA760A3E /* AppCoordinator.swift */; };
 		427BAB8B926F3FB065EEE9A8 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B54F20B2E007B07353AF1E /* CameraPreviewView.swift */; };
 		49868552152379BF4AEF76C4 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84834870627655C386580080 /* HistoryView.swift */; };
@@ -19,6 +21,7 @@
 		5F781B573203995E6B481BC7 /* LiveSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BC430DA8BD91DECD30D166 /* LiveSessionView.swift */; };
 		691DD6DF6EBDB23FE85D4A99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 515D92EC8A55029DB719BC95 /* Assets.xcassets */; };
 		6FC1B68A4E39AB8F7D216F3C /* Hold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AEA216E1F1B56194159D39 /* Hold.swift */; };
+		77953E55EFCB19EA5AE27FAC /* SkeletonOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD564EF4FEBB118659346FC0 /* SkeletonOverlayView.swift */; };
 		77CC2D8222280F2D65D1B6C8 /* DrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D4267026132D87F55DB2A5 /* DrawerView.swift */; };
 		8F4A89813C60EDE02FD15E3E /* SkillPersonalBest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7CE6930C77358EF084B69A /* SkillPersonalBest.swift */; };
 		93EFD58814361A7E5A760C6E /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6FAF73C2B6DC259C7CB62E /* VideoPlayerView.swift */; };
@@ -35,7 +38,7 @@
 /* Begin PBXFileReference section */
 		034851B352105463549F3668 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0A7CE6930C77358EF084B69A /* SkillPersonalBest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillPersonalBest.swift; sourceTree = "<group>"; };
-		25F59B64677742565EE7B124 /* CaliTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaliTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		25F59B64677742565EE7B124 /* CaliTimer.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CaliTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D6DB5183C51854F49EED4E7 /* SessionConfigSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionConfigSheet.swift; sourceTree = "<group>"; };
 		2E1B651E95750212F3AA3E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		515D92EC8A55029DB719BC95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -47,10 +50,13 @@
 		731BC575082FE8FCE9950A8D /* JetBrainsMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Bold.ttf"; sourceTree = "<group>"; };
 		82AEA216E1F1B56194159D39 /* Hold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hold.swift; sourceTree = "<group>"; };
 		84834870627655C386580080 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		8AC421C9F8BA71FA7BD3669D /* VisionProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionProcessor.swift; sourceTree = "<group>"; };
 		8D6132500F8FFFA834A570BD /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		8F2B3A3F4FA9E917010EF0D7 /* CaliTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaliTimerApp.swift; sourceTree = "<group>"; };
 		96C9F76F23D3372B00BAB94D /* BrandColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandColors.swift; sourceTree = "<group>"; };
 		A4BC430DA8BD91DECD30D166 /* LiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionView.swift; sourceTree = "<group>"; };
+		AD564EF4FEBB118659346FC0 /* SkeletonOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonOverlayView.swift; sourceTree = "<group>"; };
+		AEE25EFD24C01C01D5D4EF15 /* SkeletonPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonPreference.swift; sourceTree = "<group>"; };
 		B381E9CCCF27FA9D95E7DC86 /* VideoImportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoImportManager.swift; sourceTree = "<group>"; };
 		C8DA22A5089AFF4237419854 /* JetBrainsMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JetBrainsMono-Regular.ttf"; sourceTree = "<group>"; };
 		CA3799D788BADC9431A96B84 /* CameraActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraActor.swift; sourceTree = "<group>"; };
@@ -119,6 +125,16 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		815FB5D6C66237FA6BB2AB81 /* Vision */ = {
+			isa = PBXGroup;
+			children = (
+				AD564EF4FEBB118659346FC0 /* SkeletonOverlayView.swift */,
+				AEE25EFD24C01C01D5D4EF15 /* SkeletonPreference.swift */,
+				8AC421C9F8BA71FA7BD3669D /* VisionProcessor.swift */,
+			);
+			path = Vision;
+			sourceTree = "<group>";
+		};
 		821281E61BEBB2492605E88D /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +154,7 @@
 				D652C8418E26391069AEEC9C /* Storage */,
 				14766432DEF3D9C2A8C684C9 /* UI */,
 				2FBABCAA4E7F988E03EA69BD /* Upload */,
+				815FB5D6C66237FA6BB2AB81 /* Vision */,
 			);
 			path = CaliTimer;
 			sourceTree = "<group>";
@@ -263,6 +280,7 @@
 			);
 			mainGroup = C49E6BB2A8E1B44F50FE8B2C;
 			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -305,10 +323,13 @@
 				F25191481468DC369344B4D1 /* Session.swift in Sources */,
 				A2E16DEF92EB51E4ACE7E8BF /* SessionConfigSheet.swift in Sources */,
 				E0AEFB8502CB36535CE0D75B /* SettingsView.swift in Sources */,
+				77953E55EFCB19EA5AE27FAC /* SkeletonOverlayView.swift in Sources */,
+				3F18CB71E2C60E47AD28B77E /* SkeletonPreference.swift in Sources */,
 				8F4A89813C60EDE02FD15E3E /* SkillPersonalBest.swift in Sources */,
 				5F744930DBABD391D60E26DC /* UploadModeView.swift in Sources */,
 				E38C2A609E3A0E75035569E2 /* VideoImportManager.swift in Sources */,
 				93EFD58814361A7E5A760C6E /* VideoPlayerView.swift in Sources */,
+				0474D9B4E67C1B9A59A72362 /* VisionProcessor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +400,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UFGH7H2T8U;
 				INFOPLIST_FILE = CaliTimer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -464,7 +484,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UFGH7H2T8U;
 				INFOPLIST_FILE = CaliTimer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (

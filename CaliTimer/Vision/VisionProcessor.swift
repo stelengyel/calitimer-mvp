@@ -23,15 +23,17 @@ struct DetectedPose: Sendable {
 final class VisionProcessor: ObservableObject {
 
     // Created once, reused per-frame — prevents jitter and CPU waste.
-    // nonisolated let so it's accessible from nonisolated process().
-    nonisolated let requestHandler = VNSequenceRequestHandler()
+    // nonisolated(unsafe) because VNSequenceRequestHandler is not Sendable;
+    // safe here — only accessed from process() which is always called serially
+    // on the AVCaptureVideoDataOutput queue or the upload periodic observer queue.
+    nonisolated(unsafe) let requestHandler = VNSequenceRequestHandler()
 
     @Published var detectedPose: DetectedPose? = nil
 
     // MARK: - Joints of Interest
 
     /// The 8 joints relevant to handstand detection. Others are ignored.
-    private static let jointsOfInterest: [VNHumanBodyPoseObservation.JointName] = [
+    private nonisolated(unsafe) static let jointsOfInterest: [VNHumanBodyPoseObservation.JointName] = [
         .leftWrist,
         .rightWrist,
         .leftShoulder,

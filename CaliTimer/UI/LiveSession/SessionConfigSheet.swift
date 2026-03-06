@@ -4,13 +4,13 @@ import SwiftUI
 /// Used in two places: HomeView (.sheet before navigate) and LiveSessionView (gear icon mid-session).
 /// Skill picker: Handstand only in Phase 2. No placeholder slots for future skills.
 struct SessionConfigSheet: View {
+    /// Skeleton overlay preference — passed from LiveSessionView so both share the same instance.
+    /// When opened from HomeView (no shared instance), caller passes a fresh SkeletonPreference.
+    @ObservedObject var skeletonPref: SkeletonPreference
+
     /// Called when athlete taps Go. HomeView uses this to create Session + navigate.
     /// LiveSessionView uses this to update in-progress session config.
     let onConfirm: (_ skill: String, _ targetDuration: TimeInterval?) -> Void
-
-    /// Skeleton overlay preference — passed from LiveSessionView so both share the same instance.
-    /// When opened from HomeView (no shared instance), caller passes a fresh SkeletonPreference.
-    let skeletonPref: SkeletonPreference
 
     @Environment(\.dismiss) private var dismiss
 
