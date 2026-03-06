@@ -22,22 +22,22 @@ struct SkeletonOverlayView: View {
 
     /// 8 bone connections between the 8 tracked joints.
     private static let boneConnections: [(String, String)] = [
-        (VNHumanBodyPoseObservation.JointName.leftWrist.rawValue,
-         VNHumanBodyPoseObservation.JointName.leftShoulder.rawValue),
-        (VNHumanBodyPoseObservation.JointName.rightWrist.rawValue,
-         VNHumanBodyPoseObservation.JointName.rightShoulder.rawValue),
-        (VNHumanBodyPoseObservation.JointName.leftShoulder.rawValue,
-         VNHumanBodyPoseObservation.JointName.rightShoulder.rawValue),   // shoulder crossbar
-        (VNHumanBodyPoseObservation.JointName.leftShoulder.rawValue,
-         VNHumanBodyPoseObservation.JointName.leftHip.rawValue),
-        (VNHumanBodyPoseObservation.JointName.rightShoulder.rawValue,
-         VNHumanBodyPoseObservation.JointName.rightHip.rawValue),
-        (VNHumanBodyPoseObservation.JointName.leftHip.rawValue,
-         VNHumanBodyPoseObservation.JointName.rightHip.rawValue),         // hip crossbar
-        (VNHumanBodyPoseObservation.JointName.leftHip.rawValue,
-         VNHumanBodyPoseObservation.JointName.leftAnkle.rawValue),
-        (VNHumanBodyPoseObservation.JointName.rightHip.rawValue,
-         VNHumanBodyPoseObservation.JointName.rightAnkle.rawValue)
+        (VNHumanBodyPoseObservation.JointName.leftWrist.rawValue.rawValue,
+         VNHumanBodyPoseObservation.JointName.leftShoulder.rawValue.rawValue),
+        (VNHumanBodyPoseObservation.JointName.rightWrist.rawValue.rawValue,
+         VNHumanBodyPoseObservation.JointName.rightShoulder.rawValue.rawValue),
+        (VNHumanBodyPoseObservation.JointName.leftShoulder.rawValue.rawValue,
+         VNHumanBodyPoseObservation.JointName.rightShoulder.rawValue.rawValue),   // shoulder crossbar
+        (VNHumanBodyPoseObservation.JointName.leftShoulder.rawValue.rawValue,
+         VNHumanBodyPoseObservation.JointName.leftHip.rawValue.rawValue),
+        (VNHumanBodyPoseObservation.JointName.rightShoulder.rawValue.rawValue,
+         VNHumanBodyPoseObservation.JointName.rightHip.rawValue.rawValue),
+        (VNHumanBodyPoseObservation.JointName.leftHip.rawValue.rawValue,
+         VNHumanBodyPoseObservation.JointName.rightHip.rawValue.rawValue),         // hip crossbar
+        (VNHumanBodyPoseObservation.JointName.leftHip.rawValue.rawValue,
+         VNHumanBodyPoseObservation.JointName.leftAnkle.rawValue.rawValue),
+        (VNHumanBodyPoseObservation.JointName.rightHip.rawValue.rawValue,
+         VNHumanBodyPoseObservation.JointName.rightAnkle.rawValue.rawValue)
     ]
 
     // MARK: - Style Constants

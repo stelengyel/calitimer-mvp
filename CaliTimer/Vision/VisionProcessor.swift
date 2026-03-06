@@ -16,18 +16,17 @@ struct DetectedPose: Sendable {
 
 // MARK: - VisionProcessor
 
-/// CameraActor-isolated pose detection engine.
+/// MainActor-isolated pose detection engine.
 /// Creates a VNSequenceRequestHandler once per session (not per frame) to prevent jitter.
-/// Publishes DetectedPose? to MainActor via nonisolated(unsafe) + Task { @MainActor in }.
-@CameraActor
+/// Publishes DetectedPose? to MainActor via Task { @MainActor in }.
+@MainActor
 final class VisionProcessor: ObservableObject {
 
     // Created once, reused per-frame — prevents jitter and CPU waste.
-    private let requestHandler = VNSequenceRequestHandler()
+    // nonisolated let so it's accessible from nonisolated process().
+    nonisolated let requestHandler = VNSequenceRequestHandler()
 
-    // Published from CameraActor, read on MainActor.
-    // nonisolated(unsafe) allows SwiftUI bindings to read without crossing actor.
-    @Published nonisolated(unsafe) var detectedPose: DetectedPose? = nil
+    @Published var detectedPose: DetectedPose? = nil
 
     // MARK: - Joints of Interest
 
@@ -46,8 +45,8 @@ final class VisionProcessor: ObservableObject {
     // MARK: - Processing
 
     /// Process a single camera frame for human body pose.
-    /// Isolated to @CameraActor — called from AVCaptureVideoDataOutputSampleBufferDelegate.
-    func process(sampleBuffer: CMSampleBuffer) {
+    /// nonisolated — called from AVCaptureVideoDataOutputSampleBufferDelegate on a background thread.
+    nonisolated func process(sampleBuffer: CMSampleBuffer) {
         let request = VNDetectHumanBodyPoseRequest()
 
         do {
@@ -74,7 +73,7 @@ final class VisionProcessor: ObservableObject {
                   point.confidence > 0.2 else {
                 continue
             }
-            joints[jointName.rawValue] = point.location
+            joints[jointName.rawValue.rawValue] = point.location
         }
 
         guard !joints.isEmpty else {
