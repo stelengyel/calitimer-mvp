@@ -151,6 +151,12 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
     nonisolated func captureOutput(_ output: AVCaptureOutput,
                                    didOutput sampleBuffer: CMSampleBuffer,
                                    from connection: AVCaptureConnection) {
-        visionProcessor.process(sampleBuffer: sampleBuffer)
+        // AVCaptureVideoDataOutput delivers native sensor buffers (landscape), regardless of
+        // videoRotationAngle on the connection. Must hint Vision with the correct orientation.
+        // Back camera: scene top maps to right edge → .right (90° CCW correction)
+        // Front camera: scene top maps to left edge → .left (90° CW correction)
+        let position = currentInput?.device.position ?? .back
+        let orientation: CGImagePropertyOrientation = position == .front ? .left : .right
+        visionProcessor.process(sampleBuffer: sampleBuffer, orientation: orientation)
     }
 }
