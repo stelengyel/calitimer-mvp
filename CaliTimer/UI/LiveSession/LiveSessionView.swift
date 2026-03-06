@@ -108,9 +108,8 @@ struct LiveSessionView: View {
             //
             // Back camera (90° CCW to portrait): new_vx = 1-vy, new_vy = vx
             // Front camera (90° CW + mirror):    new_vx = 1-vy, new_vy = 1-vx
-            let front = cameraManager.isFrontCamera
             detectedJoints = joints.mapValues { pt in
-                CGPoint(x: 1 - pt.y, y: front ? 1 - pt.x : pt.x)
+                CGPoint(x: 1 - pt.y, y: 1 - pt.x)
             }
         }
         .sheet(isPresented: $showingConfigSheet) {
