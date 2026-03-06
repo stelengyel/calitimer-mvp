@@ -29,6 +29,10 @@ final class VideoImportManager: ObservableObject {
     /// True after a video has been successfully loaded (videoURL != nil).
     var hasVideo: Bool { videoURL != nil }
 
+    /// Video display size after applying preferredTransform (width×height as shown to user).
+    /// Used by UploadModeView to map Vision landscape coords into the resizeAspect video rect.
+    @Published var videoDisplaySize: CGSize = .zero
+
     // MARK: - Vision
 
     /// VisionProcessor for upload mode — @MainActor isolated, matches VisionProcessor declaration.
@@ -110,6 +114,16 @@ final class VideoImportManager: ObservableObject {
                     self.videoURL = dest
                     self.player = AVPlayer(playerItem: AVPlayerItem(url: dest))
                     self.attachVideoOutput(to: self.player!)
+                    // Read video display size (natural size + preferredTransform) for
+                    // skeleton coordinate mapping. Local file — synchronous access is safe.
+                    if let track = AVURLAsset(url: dest).tracks(withMediaType: .video).first {
+                        let natural = track.naturalSize
+                        let t = track.preferredTransform
+                        let isRotated = abs(t.b) > 0.5 || abs(t.c) > 0.5
+                        self.videoDisplaySize = isRotated
+                            ? CGSize(width: natural.height, height: natural.width)
+                            : natural
+                    }
                 case .failure(let err):
                     self.importError = "Could not prepare video: \(err.localizedDescription)"
                 }

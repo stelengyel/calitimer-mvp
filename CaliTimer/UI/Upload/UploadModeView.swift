@@ -5,8 +5,8 @@ struct UploadModeView: View {
     @StateObject private var manager = VideoImportManager()
     @StateObject private var skeletonPref = SkeletonPreference()
     @State private var showPicker = false
-    // Drives SkeletonOverlayView re-renders — updated via onReceive below
     @State private var detectedJoints: [String: CGPoint] = [:]
+    @State private var overlaySize: CGSize = .zero
 
     var body: some View {
         ZStack {
@@ -27,6 +27,10 @@ struct UploadModeView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(GeometryReader { geo in
+                    Color.clear.onAppear { overlaySize = geo.size }
+                        .onChange(of: geo.size) { overlaySize = $0 }
+                })
             } else {
                 emptyState
             }
@@ -53,7 +57,25 @@ struct UploadModeView: View {
             PHPickerSheet(isPresented: $showPicker, manager: manager)
         }
         .onReceive(manager.visionProcessor.$detectedPose) { pose in
-            detectedJoints = pose?.joints ?? [:]
+            guard let joints = pose?.joints, !joints.isEmpty,
+                  overlaySize.width > 0, manager.videoDisplaySize.width > 0 else {
+                detectedJoints = [:]
+                return
+            }
+            // AVPlayerItemVideoOutput delivers raw landscape pixel buffers (no preferredTransform).
+            // Map Vision landscape coords → position within resizeAspect video rect in view.
+            // display_x = 1-vy, display_y = vx (UIKit y=0=top), same rotation as camera mode.
+            let d = manager.videoDisplaySize
+            let s = overlaySize
+            let scale = min(s.width / d.width, s.height / d.height)
+            let vr = CGRect(x: (s.width - d.width * scale) / 2,
+                            y: (s.height - d.height * scale) / 2,
+                            width: d.width * scale, height: d.height * scale)
+            detectedJoints = joints.mapValues { pt in
+                let ox = vr.minX + (1.0 - pt.y) * vr.width
+                let oy = vr.minY + pt.x * vr.height
+                return CGPoint(x: ox / s.width, y: 1.0 - oy / s.height)
+            }
         }
     }
 
