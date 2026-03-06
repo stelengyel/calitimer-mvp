@@ -33,7 +33,7 @@ final class VisionProcessor: ObservableObject {
     // MARK: - Joints of Interest
 
     /// The 8 joints relevant to handstand detection. Others are ignored.
-    private nonisolated(unsafe) static let jointsOfInterest: [VNHumanBodyPoseObservation.JointName] = [
+    private nonisolated static let jointsOfInterest: [VNHumanBodyPoseObservation.JointName] = [
         .leftWrist,
         .rightWrist,
         .leftShoulder,
