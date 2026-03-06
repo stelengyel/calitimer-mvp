@@ -101,15 +101,23 @@ struct LiveSessionView: View {
                 detectedJoints = [:]
                 return
             }
-            // AVCaptureVideoDataOutput delivers native landscape sensor buffers.
-            // AVCaptureVideoPreviewLayer auto-rotates the preview but Vision coords are raw.
-            // Remap landscape Vision coords → portrait Vision coords so SkeletonOverlayView
-            // renders correctly over the portrait preview.
+            // Use AVCaptureVideoPreviewLayer.layerPointConverted to map Vision coords to
+            // screen coords. This handles rotation, resizeAspectFill crop, and front/back
+            // camera differences automatically.
             //
-            // Back camera (90° CCW to portrait): new_vx = 1-vy, new_vy = vx
-            // Front camera (90° CW + mirror):    new_vx = 1-vy, new_vy = 1-vx
+            // Vision: (0,0)=bottom-left → capture device: (0,0)=top-left (flip y)
+            // layerPointConverted → UIKit points (y=0=top)
+            // Normalize back to Vision convention (y=0=bottom) for SkeletonOverlayView
+            let layer = cameraManager.previewLayer
+            let bounds = layer.bounds
+            guard bounds.width > 0, bounds.height > 0 else { return }
             detectedJoints = joints.mapValues { pt in
-                CGPoint(x: 1 - pt.y, y: 1 - pt.x)
+                let capturePoint = CGPoint(x: pt.x, y: 1.0 - pt.y)
+                let layerPoint = layer.layerPointConverted(fromCaptureDevicePoint: capturePoint)
+                return CGPoint(
+                    x: layerPoint.x / bounds.width,
+                    y: 1.0 - layerPoint.y / bounds.height
+                )
             }
         }
         .sheet(isPresented: $showingConfigSheet) {
