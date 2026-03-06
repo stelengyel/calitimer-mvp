@@ -5,12 +5,15 @@ struct LiveSessionView: View {
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.modelContext) private var modelContext
 
-    // CameraManager is @MainActor — safe to access in body without actor gymnastics
-    @State private var cameraManager = CameraManager()
+    // CameraManager is ObservableObject — @StateObject so @Published changes trigger re-renders
+    @StateObject private var cameraManager = CameraManager()
     @State private var showingConfigSheet = false
 
     // Skeleton overlay preference — shared with SessionConfigSheet
     @StateObject private var skeletonPref = SkeletonPreference()
+
+    // Drives SkeletonOverlayView re-renders — updated via onReceive below
+    @State private var detectedJoints: [String: CGPoint] = [:]
 
     // Session config passed from HomeView via AppCoordinator (or stored there)
     var sessionSkill: String = "Handstand"
@@ -30,10 +33,7 @@ struct LiveSessionView: View {
             // Layer 0.5: Skeleton overlay — between camera and controls
             if skeletonPref.isEnabled {
                 GeometryReader { geo in
-                    SkeletonOverlayView(
-                        joints: cameraManager.visionProcessor.detectedPose?.joints ?? [:],
-                        viewSize: geo.size
-                    )
+                    SkeletonOverlayView(joints: detectedJoints, viewSize: geo.size)
                 }
                 .ignoresSafeArea()
                 .allowsHitTesting(false)
@@ -95,6 +95,9 @@ struct LiveSessionView: View {
         }
         .onDisappear {
             cameraManager.stopSession()
+        }
+        .onReceive(cameraManager.visionProcessor.$detectedPose) { pose in
+            detectedJoints = pose?.joints ?? [:]
         }
         .sheet(isPresented: $showingConfigSheet) {
             SessionConfigSheet(skeletonPref: skeletonPref) { skill, targetDuration in

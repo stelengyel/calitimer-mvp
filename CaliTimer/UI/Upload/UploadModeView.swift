@@ -5,6 +5,8 @@ struct UploadModeView: View {
     @StateObject private var manager = VideoImportManager()
     @StateObject private var skeletonPref = SkeletonPreference()
     @State private var showPicker = false
+    // Drives SkeletonOverlayView re-renders — updated via onReceive below
+    @State private var detectedJoints: [String: CGPoint] = [:]
 
     var body: some View {
         ZStack {
@@ -19,10 +21,7 @@ struct UploadModeView: View {
                     // Controlled by the same SkeletonPreference toggle.
                     if skeletonPref.isEnabled {
                         GeometryReader { geo in
-                            SkeletonOverlayView(
-                                joints: manager.visionProcessor.detectedPose?.joints ?? [:],
-                                viewSize: geo.size
-                            )
+                            SkeletonOverlayView(joints: detectedJoints, viewSize: geo.size)
                         }
                         .allowsHitTesting(false)
                     }
@@ -52,6 +51,9 @@ struct UploadModeView: View {
         .toolbarBackground(.hidden, for: .navigationBar)
         .sheet(isPresented: $showPicker) {
             PHPickerSheet(isPresented: $showPicker, manager: manager)
+        }
+        .onReceive(manager.visionProcessor.$detectedPose) { pose in
+            detectedJoints = pose?.joints ?? [:]
         }
     }
 
