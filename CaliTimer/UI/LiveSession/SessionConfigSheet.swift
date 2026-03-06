@@ -1,12 +1,16 @@
 import SwiftUI
 
-/// Pre-session and mid-session config: skill picker + optional target hold time.
+/// Pre-session and mid-session config: skill picker + optional target hold time + skeleton toggle.
 /// Used in two places: HomeView (.sheet before navigate) and LiveSessionView (gear icon mid-session).
 /// Skill picker: Handstand only in Phase 2. No placeholder slots for future skills.
 struct SessionConfigSheet: View {
     /// Called when athlete taps Go. HomeView uses this to create Session + navigate.
     /// LiveSessionView uses this to update in-progress session config.
     let onConfirm: (_ skill: String, _ targetDuration: TimeInterval?) -> Void
+
+    /// Skeleton overlay preference — passed from LiveSessionView so both share the same instance.
+    /// When opened from HomeView (no shared instance), caller passes a fresh SkeletonPreference.
+    let skeletonPref: SkeletonPreference
 
     @Environment(\.dismiss) private var dismiss
 
@@ -74,6 +78,27 @@ struct SessionConfigSheet: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 24)
+
+                Divider()
+                    .background(Color.textSecondary.opacity(0.15))
+
+                // Skeleton overlay toggle row
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Skeleton Overlay")
+                            .font(.mono(12))
+                            .foregroundStyle(Color.textSecondary)
+                        Text("Show joint detection on camera")
+                            .font(.mono(11))
+                            .foregroundStyle(Color.textSecondary.opacity(0.6))
+                    }
+                    Spacer()
+                    Toggle("", isOn: $skeletonPref.isEnabled)
+                        .tint(Color.brandEmber)
+                        .labelsHidden()
+                }
+                .padding(.horizontal, 24)
+                .padding(.vertical, 20)
 
                 Spacer()
 

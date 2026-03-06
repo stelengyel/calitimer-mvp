@@ -5,6 +5,7 @@ struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
 
     @State private var showingConfigSheet = false
+    @StateObject private var skeletonPref = SkeletonPreference()
 
     var body: some View {
         ZStack {
@@ -74,7 +75,7 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showingConfigSheet) {
-            SessionConfigSheet { skill, targetDuration in
+            SessionConfigSheet(skeletonPref: skeletonPref) { skill, targetDuration in
                 let session = Session(skill: skill, targetDuration: targetDuration)
                 modelContext.insert(session)
                 coordinator.navigate(to: .liveSession)

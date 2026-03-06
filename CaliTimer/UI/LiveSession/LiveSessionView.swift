@@ -9,6 +9,9 @@ struct LiveSessionView: View {
     @State private var cameraManager = CameraManager()
     @State private var showingConfigSheet = false
 
+    // Skeleton overlay preference — shared with SessionConfigSheet
+    @StateObject private var skeletonPref = SkeletonPreference()
+
     // Session config passed from HomeView via AppCoordinator (or stored there)
     var sessionSkill: String = "Handstand"
     var sessionTargetDuration: TimeInterval? = nil
@@ -22,6 +25,18 @@ struct LiveSessionView: View {
             } else {
                 CameraPreviewView(previewLayer: cameraManager.previewLayer)
                     .ignoresSafeArea()
+            }
+
+            // Layer 0.5: Skeleton overlay — between camera and controls
+            if skeletonPref.isEnabled {
+                GeometryReader { geo in
+                    SkeletonOverlayView(
+                        joints: cameraManager.visionProcessor.detectedPose?.joints ?? [:],
+                        viewSize: geo.size
+                    )
+                }
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
             }
 
             // Layer 1: Overlaid controls
@@ -82,7 +97,7 @@ struct LiveSessionView: View {
             cameraManager.stopSession()
         }
         .sheet(isPresented: $showingConfigSheet) {
-            SessionConfigSheet { skill, targetDuration in
+            SessionConfigSheet(skeletonPref: skeletonPref) { skill, targetDuration in
                 // Mid-session config update — session already created; just update in-memory
                 // Full session mutation deferred to Phase 6 when holds relationship exists
             }

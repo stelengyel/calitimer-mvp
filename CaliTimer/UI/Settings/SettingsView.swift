@@ -1,25 +1,32 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @StateObject private var skeletonPref = SkeletonPreference()
+
     var body: some View {
         ZStack {
             Color.brandBackground.ignoresSafeArea()
-
-            VStack(spacing: 16) {
-                Spacer()
-                Image(systemName: "gearshape")
-                    .font(.system(size: 40))
-                    .foregroundStyle(Color.textSecondary)
-                Text("Settings coming soon")
-                    .font(.mono(16))
-                    .foregroundStyle(Color.textSecondary)
-                Text("Settings are added when their features land")
-                    .font(.mono(12))
-                    .foregroundStyle(Color.textSecondary.opacity(0.6))
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 32)
-                Spacer()
+            List {
+                Section("Detection") {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Skeleton Overlay")
+                                .font(.mono(14))
+                                .foregroundStyle(Color.textPrimary)
+                            Text("Show joint detection on camera feed")
+                                .font(.mono(11))
+                                .foregroundStyle(Color.textSecondary)
+                        }
+                        Spacer()
+                        Toggle("", isOn: $skeletonPref.isEnabled)
+                            .tint(Color.brandEmber)
+                            .labelsHidden()
+                    }
+                    .listRowBackground(Color.brandBackground)
+                }
             }
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
         }
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
