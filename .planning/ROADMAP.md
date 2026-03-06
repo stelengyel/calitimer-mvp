@@ -13,7 +13,7 @@ CaliTimer ships in 9 phases ordered by dependency and risk. The first phase esta
 - [x] **Phase 1: App Layout & Navigation** - Screen shells, tab/nav structure, navigation plumbing — no features, just a real app skeleton that builds and runs
 - [x] **Phase 2: Camera Setup + Session View** - Live camera feed in app, session start/end controls, front/rear camera switch
 - [x] **Phase 3: Video Upload Shell** - PHPicker import, video playback UI scaffold (detection not wired yet)
-- [ ] **Phase 4: Pose Detection** - Vision framework running on live and uploaded frames, skeleton overlay rendered and toggleable
+- [x] **Phase 4: Pose Detection** - Vision framework running on live and uploaded frames, skeleton overlay rendered and toggleable
 - [ ] **Phase 5: Handstand Detection + Timer** - HoldStateMachine, live timer, detection indicator, haptic/visual alert, target duration, detection wired to imported video
 - [ ] **Phase 6: Session History & Personal Bests** - SwiftData schema, session history log, personal best tracking
 - [ ] **Phase 7: Video Capture** - Automatic per-hold recording, keep/discard review, camera roll save, upload mode clip output
@@ -81,10 +81,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — VisionProcessor (@CameraActor, VNSequenceRequestHandler, DetectedPose) + SkeletonOverlayView (Canvas renderer) + SkeletonPreference (UserDefaults toggle)
-- [ ] 04-02-PLAN.md — AVCaptureVideoDataOutput in CameraManager + skeleton overlay in LiveSessionView + toggle in SessionConfigSheet + SettingsView
-- [ ] 04-03-PLAN.md — AVPlayerItemVideoOutput in VideoImportManager + skeleton overlay in UploadModeView
-- [ ] 04-04-PLAN.md — Build on device + human verify all four success criteria
+- [x] 04-01-PLAN.md — VisionProcessor (@CameraActor, VNSequenceRequestHandler, DetectedPose) + SkeletonOverlayView (Canvas renderer) + SkeletonPreference (UserDefaults toggle)
+- [x] 04-02-PLAN.md — AVCaptureVideoDataOutput in CameraManager + skeleton overlay in LiveSessionView + toggle in SessionConfigSheet + SettingsView
+- [x] 04-03-PLAN.md — AVPlayerItemVideoOutput in VideoImportManager + skeleton overlay in UploadModeView
+- [x] 04-04-PLAN.md — Build on device + human verify all four success criteria
 
 ### Phase 5: Handstand Detection + Timer
 **Goal**: The app detects handstand holds automatically, counts up a live timer during each hold, alerts the athlete at their target duration, and produces the same hold-with-timestamp output from an imported video — this is the core product and must be validated thoroughly before proceeding
@@ -151,7 +151,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 1. App Layout & Navigation | 3/3 | Complete | 2026-03-01 |
 | 2. Camera Setup + Session View | 3/3 | Complete | 2026-03-02 |
 | 3. Video Upload Shell | 2/2 | Complete | 2026-03-03 |
-| 4. Pose Detection | 3/4 | In Progress|  |
+| 4. Pose Detection | 4/4 | Complete | 2026-03-06 |
 | 5. Handstand Detection + Timer | 0/TBD | Not started | - |
 | 6. Session History & Personal Bests | 0/TBD | Not started | - |
 | 7. Video Capture | 0/TBD | Not started | - |
