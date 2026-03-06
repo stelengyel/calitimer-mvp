@@ -41,9 +41,6 @@ final class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
     /// True when camera permission was denied or restricted.
     @Published var permissionDenied: Bool = false
 
-    /// True when the front camera is active. Used by LiveSessionView to remap Vision coords.
-    @Published var isFrontCamera: Bool = false
-
     // MARK: - Init
 
     override init() {
@@ -87,7 +84,6 @@ final class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
         guard let currentInput else { return }
         let currentPosition = currentInput.device.position
         let newPosition: AVCaptureDevice.Position = currentPosition == .back ? .front : .back
-        isFrontCamera = (newPosition == .front)
 
         guard let newDevice = AVCaptureDevice.default(.builtInWideAngleCamera,
                                                        for: .video,
