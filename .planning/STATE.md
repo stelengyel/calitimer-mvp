@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 04-pose-detection-01-PLAN.md
-last_updated: "2026-03-06T15:59:01.616Z"
+stopped_at: Completed 04-pose-detection-03-PLAN.md
+last_updated: "2026-03-06T16:04:53.092Z"
 last_activity: 2026-03-03 — UploadModeView wired with full 3-zone state machine; PHPicker + AVPlayer playback verified on simulator
 progress:
   total_phases: 9
   completed_phases: 1
   total_plans: 6
-  completed_plans: 3
+  completed_plans: 5
   percent: 33
 ---
 
@@ -61,6 +61,7 @@ Progress: [███░░░░░░░] 33% (3 of 9 phases complete)
 | Phase 03-video-upload-shell P01 | 4 | 2 tasks | 4 files |
 | Phase 03-video-upload-shell P02 | 18 | 2 tasks | 4 files |
 | Phase 04-pose-detection P01 | 8 | 2 tasks | 3 files |
+| Phase 04-pose-detection P03 | 2 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -95,6 +96,8 @@ Recent decisions affecting current work:
 - [Phase 03-video-upload-shell]: Long video warning (>30 min) uses Task.sleep(0.5s) before asset.load(.duration) to wait for AVPlayerItem readiness before reading asset properties
 - [Phase 04-pose-detection]: VisionProcessor uses @CameraActor isolation per plan contract — nonisolated(unsafe) + Task { @MainActor in } bridges to SwiftUI bindings
 - [Phase 04-pose-detection]: project.yml requires no Vision group entry — path: CaliTimer is recursive, XcodeGen picks up Vision/ subdirectory automatically
+- [Phase 04-pose-detection]: Task.detached used for nonisolated VisionProcessor.process() in upload pipeline — @CameraActor not used, @MainActor is the actual isolation per CLAUDE.md preference
+- [Phase 04-pose-detection]: AVPlayerItemVideoOutput + periodic time observer at 33ms interval is the upload-mode frame tap pattern — hasNewPixelBuffer guard holds skeleton when paused without extra state
 
 ### Pending Todos
 
@@ -109,6 +112,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-06T15:59:01.613Z
-Stopped at: Completed 04-pose-detection-01-PLAN.md
+Last session: 2026-03-06T16:04:46.158Z
+Stopped at: Completed 04-pose-detection-03-PLAN.md
 Resume file: None
