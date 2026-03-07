@@ -4,6 +4,8 @@ struct UploadModeView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var manager = VideoImportManager()
     @StateObject private var skeletonPref = SkeletonPreference()
+    @StateObject private var indicatorPref = DetectionIndicatorPreference()
+    @StateObject private var holdStateMachine = HoldStateMachine()
     @State private var showPicker = false
     @State private var detectedJoints: [String: CGPoint] = [:]
     @State private var overlaySize: CGSize = .zero
@@ -17,13 +19,42 @@ struct UploadModeView: View {
                     VideoPlayerView(player: player)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                    // Skeleton overlay on top of video — same pattern as LiveSessionView.
-                    // Controlled by the same SkeletonPreference toggle.
+                    // Skeleton overlay on top of video (during scan and playback)
                     if skeletonPref.isEnabled {
                         GeometryReader { geo in
                             SkeletonOverlayView(joints: detectedJoints, viewSize: geo.size)
                         }
                         .allowsHitTesting(false)
+                    }
+
+                    // Detection indicator + timer overlay (shown during scan)
+                    if manager.isScanning && indicatorPref.isEnabled {
+                        VStack {
+                            VStack(spacing: 4) {
+                                HoldIndicatorView(state: holdStateMachine.state)
+                                HoldTimerView(
+                                    elapsed: holdStateMachine.displayedElapsed,
+                                    targetReached: false  // no target in upload mode
+                                )
+                            }
+                            .padding(.top, 60)
+                            Spacer()
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+
+                    // Zone 3: holds results (shown after scan completes)
+                    // Per Phase 3 stability contract: this is inner content only — outer ZStack unchanged
+                    if !manager.isScanning {
+                        VStack {
+                            Spacer()
+                            holdsResultsView
+                                .frame(maxWidth: .infinity)
+                                .background(.ultraThinMaterial)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .padding(.horizontal, 12)
+                                .padding(.bottom, 16)
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -56,15 +87,21 @@ struct UploadModeView: View {
         .sheet(isPresented: $showPicker) {
             PHPickerSheet(isPresented: $showPicker, manager: manager)
         }
+        // Trigger scan automatically when a new video is imported
+        .onChange(of: manager.videoURL) { _, newURL in
+            if newURL != nil {
+                manager.startScan(holdStateMachine: holdStateMachine)
+            }
+        }
+        .onDisappear {
+            manager.cancelScan()
+        }
         .onReceive(manager.visionProcessor.$detectedPose) { pose in
             guard let joints = pose?.joints, !joints.isEmpty,
                   overlaySize.width > 0, manager.videoDisplaySize.width > 0 else {
                 detectedJoints = [:]
                 return
             }
-            // Vision is given the correct pixel orientation, so it returns portrait coords:
-            // (0,0)=bottom-left, (1,1)=top-right of portrait display.
-            // Map directly into the resizeAspect video rect within the overlay view.
             let d = manager.videoDisplaySize
             let s = overlaySize
             let scale = min(s.width / d.width, s.height / d.height)
@@ -78,6 +115,44 @@ struct UploadModeView: View {
             }
         }
     }
+
+    // MARK: - Zone 3: Holds Results
+
+    @ViewBuilder
+    private var holdsResultsView: some View {
+        if holdStateMachine.completedHolds.isEmpty && manager.videoURL != nil {
+            // Empty state — shown after scan completes with no holds
+            Text("No handstand holds detected")
+                .font(.mono(14))
+                .foregroundStyle(Color.textSecondary.opacity(0.7))
+                .padding(.vertical, 16)
+                .frame(maxWidth: .infinity)
+        } else if !holdStateMachine.completedHolds.isEmpty {
+            // Results list — scrollable, max 3 rows visible before scroll
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(Array(holdStateMachine.completedHolds.enumerated()), id: \.element.id) { index, hold in
+                        HStack {
+                            Text("\(index + 1). \(hold.formattedStart()) - \(hold.formattedEnd()) — \(Int(hold.duration))s")
+                                .font(.mono(13))
+                                .foregroundStyle(Color.textPrimary)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 10)
+                            Spacer()
+                        }
+                        if index < holdStateMachine.completedHolds.count - 1 {
+                            Divider()
+                                .background(Color.textSecondary.opacity(0.15))
+                                .padding(.leading, 16)
+                        }
+                    }
+                }
+            }
+            .frame(maxHeight: 150)  // 3 rows approx; scrollable beyond that
+        }
+    }
+
+    // MARK: - Empty State (no video imported yet)
 
     private var emptyState: some View {
         VStack(spacing: 16) {
