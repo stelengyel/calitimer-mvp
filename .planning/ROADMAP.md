@@ -158,7 +158,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 2. Camera Setup + Session View | 3/3 | Complete | 2026-03-02 |
 | 3. Video Upload Shell | 2/2 | Complete | 2026-03-03 |
 | 4. Pose Detection | 4/4 | Complete | 2026-03-06 |
-| 5. Handstand Detection + Timer | 0/4 | Planned | - |
+| 5. Handstand Detection + Timer | 1/4 | In Progress|  |
 | 6. Session History & Personal Bests | 0/TBD | Not started | - |
 | 7. Video Capture | 0/TBD | Not started | - |
 | 8. Robustness + Polish | 0/TBD | Not started | - |

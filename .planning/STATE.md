@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Phase 5 context gathered
-last_updated: "2026-03-07T11:03:58.118Z"
+stopped_at: Completed 05-handstand-detection-timer-01-PLAN.md
+last_updated: "2026-03-07T14:03:27.550Z"
 last_activity: 2026-03-06 — Ember skeleton verified on live camera + upload mode on device; all 4 success criteria confirmed
 progress:
   total_phases: 9
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 4
+  completed_plans: 1
   percent: 44
 ---
 
@@ -64,6 +64,7 @@ Progress: [████░░░░░░] 44% (4 of 9 phases complete)
 | Phase 04-pose-detection P02 | 2 | 2 tasks | 5 files |
 | Phase 04-pose-detection P03 | 2 | 2 tasks | 2 files |
 | Phase 04-pose-detection P04 | - | verification | 0 files |
+| Phase 05-handstand-detection-timer P01 | 3 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -102,6 +103,9 @@ Recent decisions affecting current work:
 - [Phase 04-pose-detection]: AVPlayerItemVideoOutput + periodic time observer at 33ms interval is the upload-mode frame tap pattern — hasNewPixelBuffer guard holds skeleton when paused without extra state
 - [Phase 04-pose-detection]: captureOutput calls visionProcessor.process() directly (nonisolated on both sides) — no Task actor bridge needed, zero actor hop overhead per frame
 - [Phase 04-pose-detection]: skeletonPref passed as let parameter to SessionConfigSheet from LiveSessionView — single instance shared mid-session; independent instances in HomeView and SettingsView share UserDefaults key
+- [Phase 05-handstand-detection-timer]: Lenient 1+1 joint check (min wrist Y < max ankle Y) used for handstand classifier — 4-joint requirement explicitly rejected per CONTEXT.md
+- [Phase 05-handstand-detection-timer]: Entry debounce = 5 frames, exit debounce = 12 frames for HoldStateMachine — within CONTEXT.md specified ranges
+- [Phase 05-handstand-detection-timer]: Hold timestamps backdated: start = first inverted frame, end = first non-inverted frame; upload mode uses CMTime delta not wall clock
 
 ### Pending Todos
 
@@ -116,6 +120,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-07T11:03:58.116Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-handstand-detection-timer/05-CONTEXT.md
+Last session: 2026-03-07T14:03:27.548Z
+Stopped at: Completed 05-handstand-detection-timer-01-PLAN.md
+Resume file: None
