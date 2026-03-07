@@ -34,7 +34,7 @@
 ### Video — Upload Mode
 
 - [x] **VIDU-01**: User can import an existing video from camera roll
-- [ ] **VIDU-02**: Detection pipeline runs against imported video and identifies holds with timestamps
+- [x] **VIDU-02**: Detection pipeline runs against imported video and identifies holds with timestamps
 - [ ] **VIDU-03**: Output matches live mode: detected skill, hold durations, trimmed clip per hold, keep/discard review
 
 ### History & Tracking
@@ -93,7 +93,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DETE-04 | Phase 5 | Complete |
 | DETE-06 | Phase 5 | Complete |
 | DETE-07 | Phase 5 | Complete |
-| VIDU-02 | Phase 5 | Pending |
+| VIDU-02 | Phase 5 | Complete |
 | HIST-01 | Phase 6 | Pending |
 | HIST-02 | Phase 6 | Pending |
 | VIDL-01 | Phase 7 | Pending |
