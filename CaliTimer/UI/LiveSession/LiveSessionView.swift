@@ -101,18 +101,19 @@ struct LiveSessionView: View {
                 detectedJoints = [:]
                 return
             }
-            // Use AVCaptureVideoPreviewLayer.layerPointConverted to map Vision coords to
-            // screen coords. This handles rotation, resizeAspectFill crop, and front/back
-            // camera differences automatically.
-            //
-            // Vision: (0,0)=bottom-left → capture device: (0,0)=top-left (flip y)
-            // layerPointConverted → UIKit points (y=0=top)
-            // Normalize back to Vision convention (y=0=bottom) for SkeletonOverlayView
+            // Vision is given .right orientation → returns portrait coords:
+            // (0,0)=bottom-left, (1,1)=top-right of portrait.
+            // layerPointConverted expects landscape capture device coords (0,0)=top-left.
+            // Invert 90° CW rotation: cx = 1-vy, cy = 1-vx.
+            // layerPointConverted handles resizeAspectFill crop and front camera mirror.
             let layer = cameraManager.previewLayer
             let bounds = layer.bounds
             guard bounds.width > 0, bounds.height > 0 else { return }
             detectedJoints = joints.mapValues { pt in
-                let capturePoint = CGPoint(x: pt.x, y: 1.0 - pt.y)
+                // Both cameras use .right orientation → Vision returns portrait coords.
+                // Invert 90° CW rotation to get landscape capture device coords.
+                // layerPointConverted handles front camera mirror automatically.
+                let capturePoint = CGPoint(x: 1.0 - pt.y, y: 1.0 - pt.x)
                 let layerPoint = layer.layerPointConverted(fromCaptureDevicePoint: capturePoint)
                 return CGPoint(
                     x: layerPoint.x / bounds.width,

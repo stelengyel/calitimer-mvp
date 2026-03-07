@@ -41,6 +41,9 @@ final class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
     /// True when camera permission was denied or restricted.
     @Published var permissionDenied: Bool = false
 
+    /// Current active camera position — used by LiveSessionView to derive Vision orientation.
+    @Published var cameraPosition: AVCaptureDevice.Position = .back
+
     // MARK: - Init
 
     override init() {
@@ -95,6 +98,7 @@ final class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
         if session.canAddInput(newInput) {
             session.addInput(newInput)
             self.currentInput = newInput
+            self.cameraPosition = newPosition
         } else {
             session.addInput(currentInput)
         }
@@ -114,6 +118,7 @@ final class CameraManager: NSObject, ObservableObject, @unchecked Sendable {
                 if session.canAddInput(input) {
                     session.addInput(input)
                     currentInput = input
+                    cameraPosition = .back
                 }
             }
         }
@@ -151,6 +156,10 @@ extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
     nonisolated func captureOutput(_ output: AVCaptureOutput,
                                    didOutput sampleBuffer: CMSampleBuffer,
                                    from connection: AVCaptureConnection) {
-        visionProcessor.process(sampleBuffer: sampleBuffer)
+        // App is portrait-only. Both sensors deliver landscape frames needing 90° CW
+        // rotation to display as portrait → .right. layerPointConverted handles the
+        // front camera's horizontal mirror on the display side automatically.
+        let orientation: CGImagePropertyOrientation = .right
+        visionProcessor.process(sampleBuffer: sampleBuffer, orientation: orientation)
     }
 }

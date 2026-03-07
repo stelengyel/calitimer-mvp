@@ -62,9 +62,9 @@ struct UploadModeView: View {
                 detectedJoints = [:]
                 return
             }
-            // AVPlayerItemVideoOutput delivers raw landscape pixel buffers (no preferredTransform).
-            // Map Vision landscape coords → position within resizeAspect video rect in view.
-            // display_x = 1-vy, display_y = vx (UIKit y=0=top), same rotation as camera mode.
+            // Vision is given the correct pixel orientation, so it returns portrait coords:
+            // (0,0)=bottom-left, (1,1)=top-right of portrait display.
+            // Map directly into the resizeAspect video rect within the overlay view.
             let d = manager.videoDisplaySize
             let s = overlaySize
             let scale = min(s.width / d.width, s.height / d.height)
@@ -72,8 +72,8 @@ struct UploadModeView: View {
                             y: (s.height - d.height * scale) / 2,
                             width: d.width * scale, height: d.height * scale)
             detectedJoints = joints.mapValues { pt in
-                let ox = vr.minX + (1.0 - pt.y) * vr.width
-                let oy = vr.minY + (1.0 - pt.x) * vr.height
+                let ox = vr.minX + pt.x * vr.width
+                let oy = vr.minY + (1.0 - pt.y) * vr.height
                 return CGPoint(x: ox / s.width, y: 1.0 - oy / s.height)
             }
         }

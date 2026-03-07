@@ -51,6 +51,11 @@ final class VideoImportManager: ObservableObject {
     /// nonisolated(unsafe) because AVPlayerItemVideoOutput cannot cross actor boundaries.
     nonisolated(unsafe) private var videoOutput: AVPlayerItemVideoOutput?
 
+    /// Orientation of the pixel buffer as delivered by AVPlayerItemVideoOutput.
+    /// Derived from the video track's preferredTransform at import time.
+    /// nonisolated(unsafe) because it's written on MainActor and read on Task.detached.
+    nonisolated(unsafe) private var pixelOrientation: CGImagePropertyOrientation = .up
+
     /// Periodic time observer token for ~30fps frame polling. Must be removed before dealloc.
     private var frameObserverToken: Any?
 
@@ -111,19 +116,37 @@ final class VideoImportManager: ObservableObject {
 
                 switch importResult {
                 case .success(let dest):
-                    self.videoURL = dest
-                    self.player = AVPlayer(playerItem: AVPlayerItem(url: dest))
-                    self.attachVideoOutput(to: self.player!)
-                    // Read video display size (natural size + preferredTransform) for
-                    // skeleton coordinate mapping. Local file — synchronous access is safe.
+                    // Read video display size and orientation before committing state.
+                    // Local file — synchronous track access is safe here.
                     if let track = AVURLAsset(url: dest).tracks(withMediaType: .video).first {
                         let natural = track.naturalSize
                         let t = track.preferredTransform
                         let isRotated = abs(t.b) > 0.5 || abs(t.c) > 0.5
-                        self.videoDisplaySize = isRotated
+                        let displaySize = isRotated
                             ? CGSize(width: natural.height, height: natural.width)
                             : natural
+
+                        // Reject landscape videos — app is portrait-only.
+                        guard displaySize.height >= displaySize.width else {
+                            self.importError = "Please import a portrait video."
+                            return
+                        }
+
+                        self.videoDisplaySize = displaySize
+
+                        // Derive Vision orientation from the pixel buffer layout.
+                        // isRotated → pixels are landscape-encoded; determine CW vs CCW.
+                        // !isRotated → pixels match display orientation (.up or .down).
+                        if isRotated {
+                            self.pixelOrientation = t.b > 0 ? .right : .left
+                        } else {
+                            self.pixelOrientation = t.a >= 0 ? .up : .down
+                        }
                     }
+
+                    self.videoURL = dest
+                    self.player = AVPlayer(playerItem: AVPlayerItem(url: dest))
+                    self.attachVideoOutput(to: self.player!)
                 case .failure(let err):
                     self.importError = "Could not prepare video: \(err.localizedDescription)"
                 }
@@ -188,8 +211,9 @@ final class VideoImportManager: ObservableObject {
 
         // process() is nonisolated — dispatch to a background thread to keep Main thread free
         let processor = visionProcessor
+        let orientation = pixelOrientation
         Task.detached {
-            processor.process(sampleBuffer: sampleBuffer)
+            processor.process(sampleBuffer: sampleBuffer, orientation: orientation)
         }
     }
 
