@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0474D9B4E67C1B9A59A72362 /* VisionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC421C9F8BA71FA7BD3669D /* VisionProcessor.swift */; };
+		8DE887CE4AC34DDFA55BC9D2 /* HandstandClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00721AB67F3B4C149BF2811C /* HandstandClassifier.swift */; };
+		8661C355BFDE4373AA325329 /* HoldStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA5628EC4534BE8BFCC40F7 /* HoldStateMachine.swift */; };
+		B7CFE80A3AE247E793083C64 /* DetectionIndicatorPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7214EE5D6741C3B615A412 /* DetectionIndicatorPreference.swift */; };
 		109771AAD7A50F4668A4FBC8 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB3272524DA2FC68D1D6861 /* CameraManager.swift */; };
 		17BED22F0211DD1CE67260A5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D39DCB259B6EB56E5EC94AB /* HomeView.swift */; };
 		3596F820A12E90EB45518F3A /* BrandColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C9F76F23D3372B00BAB94D /* BrandColors.swift */; };
@@ -51,6 +54,9 @@
 		82AEA216E1F1B56194159D39 /* Hold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hold.swift; sourceTree = "<group>"; };
 		84834870627655C386580080 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		8AC421C9F8BA71FA7BD3669D /* VisionProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionProcessor.swift; sourceTree = "<group>"; };
+		00721AB67F3B4C149BF2811C /* HandstandClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandstandClassifier.swift; sourceTree = "<group>"; };
+		ECA5628EC4534BE8BFCC40F7 /* HoldStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldStateMachine.swift; sourceTree = "<group>"; };
+		3F7214EE5D6741C3B615A412 /* DetectionIndicatorPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionIndicatorPreference.swift; sourceTree = "<group>"; };
 		8D6132500F8FFFA834A570BD /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		8F2B3A3F4FA9E917010EF0D7 /* CaliTimerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaliTimerApp.swift; sourceTree = "<group>"; };
 		96C9F76F23D3372B00BAB94D /* BrandColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandColors.swift; sourceTree = "<group>"; };
@@ -131,6 +137,9 @@
 				AD564EF4FEBB118659346FC0 /* SkeletonOverlayView.swift */,
 				AEE25EFD24C01C01D5D4EF15 /* SkeletonPreference.swift */,
 				8AC421C9F8BA71FA7BD3669D /* VisionProcessor.swift */,
+				00721AB67F3B4C149BF2811C /* HandstandClassifier.swift */,
+				ECA5628EC4534BE8BFCC40F7 /* HoldStateMachine.swift */,
+				3F7214EE5D6741C3B615A412 /* DetectionIndicatorPreference.swift */,
 			);
 			path = Vision;
 			sourceTree = "<group>";
@@ -329,6 +338,9 @@
 				E38C2A609E3A0E75035569E2 /* VideoImportManager.swift in Sources */,
 				93EFD58814361A7E5A760C6E /* VideoPlayerView.swift in Sources */,
 				0474D9B4E67C1B9A59A72362 /* VisionProcessor.swift in Sources */,
+				8DE887CE4AC34DDFA55BC9D2 /* HandstandClassifier.swift in Sources */,
+				8661C355BFDE4373AA325329 /* HoldStateMachine.swift in Sources */,
+				B7CFE80A3AE247E793083C64 /* DetectionIndicatorPreference.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
