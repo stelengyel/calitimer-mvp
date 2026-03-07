@@ -26,6 +26,11 @@ final class VideoImportManager: ObservableObject {
     /// Non-nil when the last import attempt failed. Reset to nil on new import.
     @Published var importError: String?
 
+    // MARK: - Scan state (Phase 5)
+
+    /// True while AVAssetReaderScanner is running. UploadModeView shows scan progress UI.
+    @Published var isScanning = false
+
     /// True after a video has been successfully loaded (videoURL != nil).
     var hasVideo: Bool { videoURL != nil }
 
@@ -39,6 +44,9 @@ final class VideoImportManager: ObservableObject {
     let visionProcessor = VisionProcessor()
 
     // MARK: - Internal
+
+    /// Reference to the active scan task. Cancelled when a new video is imported.
+    private var scanTask: Task<Void, Never>?
 
     /// Tracks the active download progress so it can be cancelled or observed.
     private var progressObservation: Progress?
@@ -148,6 +156,7 @@ final class VideoImportManager: ObservableObject {
                         self.videoURL = dest
                         self.player = AVPlayer(playerItem: AVPlayerItem(url: dest))
                         self.attachVideoOutput(to: self.player!)
+                        // Phase 5: UploadModeView will call self.startScan(holdStateMachine:) after import — NOT called here to avoid needing holdStateMachine reference in VideoImportManager
                     }
                 case .failure(let err):
                     self.importError = "Could not prepare video: \(err.localizedDescription)"
@@ -216,6 +225,57 @@ final class VideoImportManager: ObservableObject {
         Task.detached {
             processor.process(sampleBuffer: sampleBuffer, orientation: orientation)
         }
+    }
+
+    // MARK: - Scan (Phase 5)
+
+    /// Start a full-speed AVAssetReader scan of the current video.
+    /// Called automatically after video import completes (no user tap required — per CONTEXT.md).
+    /// Stops the AVPlayerItemVideoOutput observer during scan to avoid dual processing.
+    func startScan(holdStateMachine: HoldStateMachine) {
+        guard let url = videoURL else { return }
+
+        // Cancel any in-flight scan
+        scanTask?.cancel()
+
+        // Detach the realtime-rate observer during full-speed scan
+        detachVideoOutput()
+
+        isScanning = true
+
+        let processor = visionProcessor
+        let orientation = pixelOrientation
+
+        scanTask = Task {
+            defer {
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    self.isScanning = false
+                    // Reattach video output for skeleton overlay after scan completes
+                    if let player = self.player {
+                        self.attachVideoOutput(to: player)
+                    }
+                }
+            }
+
+            do {
+                try await AVAssetReaderScanner.scan(
+                    url: url,
+                    visionProcessor: processor,
+                    holdStateMachine: holdStateMachine,
+                    pixelOrientation: orientation
+                )
+            } catch {
+                print("[AVAssetReaderScanner] scan error: \(error)")
+            }
+        }
+    }
+
+    /// Cancel an in-progress scan. Called on new import or view dismissal.
+    func cancelScan() {
+        scanTask?.cancel()
+        scanTask = nil
+        isScanning = false
     }
 
     /// Remove the video output and stop the periodic observer. Called before attaching a new one
