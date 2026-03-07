@@ -94,7 +94,9 @@ struct VideoPlayerView: View {
     private func setupObservers() {
         let interval = CMTime(seconds: 0.25, preferredTimescale: 600)
         timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { time in
-            currentTime = time.seconds
+            MainActor.assumeIsolated {
+                currentTime = time.seconds
+            }
         }
 
         if let item = player.currentItem {
@@ -104,8 +106,10 @@ struct VideoPlayerView: View {
                         duration = item.duration.seconds.isNaN ? 0 : item.duration.seconds
                         if let track = item.tracks.first(where: { $0.assetTrack?.mediaType == .video }),
                            let assetTrack = track.assetTrack {
-                            let size = assetTrack.naturalSize
-                            naturalSize = size.width > 0 && size.height > 0 ? size : CGSize(width: 9, height: 16)
+                            Task { @MainActor in
+                                let size = (try? await assetTrack.load(.naturalSize)) ?? CGSize(width: 9, height: 16)
+                                naturalSize = size.width > 0 && size.height > 0 ? size : CGSize(width: 9, height: 16)
+                            }
                         }
                         isBuffering = false
                         player.play()
@@ -118,9 +122,11 @@ struct VideoPlayerView: View {
                 object: item,
                 queue: .main
             ) { _ in
-                isPlaying = false
-                currentTime = 0
-                player.seek(to: .zero)
+                MainActor.assumeIsolated {
+                    isPlaying = false
+                    currentTime = 0
+                    player.seek(to: .zero)
+                }
             }
         }
     }

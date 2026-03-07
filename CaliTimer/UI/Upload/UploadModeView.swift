@@ -29,7 +29,7 @@ struct UploadModeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(GeometryReader { geo in
                     Color.clear.onAppear { overlaySize = geo.size }
-                        .onChange(of: geo.size) { overlaySize = $0 }
+                        .onChange(of: geo.size) { _, newSize in overlaySize = newSize }
                 })
             } else {
                 emptyState

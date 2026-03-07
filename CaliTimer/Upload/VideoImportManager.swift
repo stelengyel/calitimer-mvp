@@ -1,5 +1,5 @@
 import Foundation
-import AVFoundation
+@preconcurrency import AVFoundation
 import PhotosUI
 import SwiftUI
 
@@ -116,37 +116,39 @@ final class VideoImportManager: ObservableObject {
 
                 switch importResult {
                 case .success(let dest):
-                    // Read video display size and orientation before committing state.
-                    // Local file — synchronous track access is safe here.
-                    if let track = AVURLAsset(url: dest).tracks(withMediaType: .video).first {
-                        let natural = track.naturalSize
-                        let t = track.preferredTransform
-                        let isRotated = abs(t.b) > 0.5 || abs(t.c) > 0.5
-                        let displaySize = isRotated
-                            ? CGSize(width: natural.height, height: natural.width)
-                            : natural
+                    Task { @MainActor [weak self] in
+                        guard let self else { return }
+                        let asset = AVURLAsset(url: dest)
+                        if let track = try? await asset.loadTracks(withMediaType: .video).first {
+                            let natural = (try? await track.load(.naturalSize)) ?? .zero
+                            let t = (try? await track.load(.preferredTransform)) ?? .identity
+                            let isRotated = abs(t.b) > 0.5 || abs(t.c) > 0.5
+                            let displaySize = isRotated
+                                ? CGSize(width: natural.height, height: natural.width)
+                                : natural
 
-                        // Reject landscape videos — app is portrait-only.
-                        guard displaySize.height >= displaySize.width else {
-                            self.importError = "Please import a portrait video."
-                            return
+                            // Reject landscape videos — app is portrait-only.
+                            guard displaySize.height >= displaySize.width else {
+                                self.importError = "Please import a portrait video."
+                                return
+                            }
+
+                            self.videoDisplaySize = displaySize
+
+                            // Derive Vision orientation from the pixel buffer layout.
+                            // isRotated → pixels are landscape-encoded; determine CW vs CCW.
+                            // !isRotated → pixels match display orientation (.up or .down).
+                            if isRotated {
+                                self.pixelOrientation = t.b > 0 ? .right : .left
+                            } else {
+                                self.pixelOrientation = t.a >= 0 ? .up : .down
+                            }
                         }
 
-                        self.videoDisplaySize = displaySize
-
-                        // Derive Vision orientation from the pixel buffer layout.
-                        // isRotated → pixels are landscape-encoded; determine CW vs CCW.
-                        // !isRotated → pixels match display orientation (.up or .down).
-                        if isRotated {
-                            self.pixelOrientation = t.b > 0 ? .right : .left
-                        } else {
-                            self.pixelOrientation = t.a >= 0 ? .up : .down
-                        }
+                        self.videoURL = dest
+                        self.player = AVPlayer(playerItem: AVPlayerItem(url: dest))
+                        self.attachVideoOutput(to: self.player!)
                     }
-
-                    self.videoURL = dest
-                    self.player = AVPlayer(playerItem: AVPlayerItem(url: dest))
-                    self.attachVideoOutput(to: self.player!)
                 case .failure(let err):
                     self.importError = "Could not prepare video: \(err.localizedDescription)"
                 }
@@ -168,10 +170,9 @@ final class VideoImportManager: ObservableObject {
         // Remove any previous output before attaching a new one
         detachVideoOutput()
 
-        let outputSettings: [String: Any] = [
-            kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
-        ]
-        let output = AVPlayerItemVideoOutput(pixelBufferAttributes: outputSettings)
+        let output = AVPlayerItemVideoOutput(pixelBufferAttributes: [
+            kCVPixelBufferPixelFormatTypeKey as String: NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)
+        ])
         self.videoOutput = output
         player.currentItem?.add(output)
 
