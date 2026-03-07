@@ -96,7 +96,13 @@ Plans:
   3. The live timer counts up on screen during an active hold and stops cleanly when the hold breaks; debounce prevents phantom hold terminations on brief pose loss
   4. A haptic and visual alert fires when the user-set target duration is reached; the user can change the target duration on-the-fly during a session without stopping
   5. When a video is imported in upload mode, the detection pipeline runs against it and produces a list of detected holds with timestamps — output is visible in the upload screen's designated result area
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — HandstandClassifier (pure static) + HoldStateMachine (@MainActor, debounce, backdated timestamps, target alert) + DetectionIndicatorPreference
+- [ ] 05-02-PLAN.md — HoldIndicatorView + HoldTimerView + wire into LiveSessionView + SessionConfigSheet indicator toggle + SettingsView indicator toggle
+- [ ] 05-03-PLAN.md — AVAssetReaderScanner (full-speed upload scan) + VideoImportManager scan hook + UploadModeView Zone 3 results list
+- [ ] 05-04-PLAN.md — Build on device + confirm Vision joint key strings + human verify all 7 Phase 5 requirements
 
 ### Phase 6: Session History & Personal Bests
 **Goal**: Every hold the athlete has ever recorded is queryable from history, grouped by session, and the personal best for each skill is always current and displayed correctly
@@ -152,7 +158,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 2. Camera Setup + Session View | 3/3 | Complete | 2026-03-02 |
 | 3. Video Upload Shell | 2/2 | Complete | 2026-03-03 |
 | 4. Pose Detection | 4/4 | Complete | 2026-03-06 |
-| 5. Handstand Detection + Timer | 0/TBD | Not started | - |
+| 5. Handstand Detection + Timer | 0/4 | Planned | - |
 | 6. Session History & Personal Bests | 0/TBD | Not started | - |
 | 7. Video Capture | 0/TBD | Not started | - |
 | 8. Robustness + Polish | 0/TBD | Not started | - |
