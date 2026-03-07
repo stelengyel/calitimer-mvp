@@ -9,8 +9,8 @@
 
 - [x] **DETE-01**: App automatically detects handstand hold via geometric pose classifier (feet above head in normalized coords) — no manual start/stop required
 - [x] **DETE-02**: Hold state machine transitions through searching → detected → timing → hold ended with debounce (10–15 frame threshold to prevent phantom holds)
-- [ ] **DETE-03**: Detection state indicator shown on screen with 3 distinct visual states (searching / detected / timing), independently toggleable
-- [ ] **DETE-04**: Timer counts up during active hold, visible on screen in real-time
+- [x] **DETE-03**: Detection state indicator shown on screen with 3 distinct visual states (searching / detected / timing), independently toggleable
+- [x] **DETE-04**: Timer counts up during active hold, visible on screen in real-time
 - [x] **DETE-05**: Skeleton overlay rendered on camera feed, independently toggleable
 - [x] **DETE-06**: Visual and haptic alert fires when user-set target hold duration is reached
 - [x] **DETE-07**: User can set target hold duration on-the-fly during a session (no pre-session config required)
@@ -89,8 +89,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DETE-05 | Phase 4 | Complete |
 | DETE-01 | Phase 5 | Complete |
 | DETE-02 | Phase 5 | Complete |
-| DETE-03 | Phase 5 | Pending |
-| DETE-04 | Phase 5 | Pending |
+| DETE-03 | Phase 5 | Complete |
+| DETE-04 | Phase 5 | Complete |
 | DETE-06 | Phase 5 | Complete |
 | DETE-07 | Phase 5 | Complete |
 | VIDU-02 | Phase 5 | Pending |

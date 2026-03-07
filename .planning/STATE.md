@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 05-handstand-detection-timer-01-PLAN.md
-last_updated: "2026-03-07T14:03:27.550Z"
+stopped_at: Completed 05-handstand-detection-timer-02-PLAN.md
+last_updated: "2026-03-07T14:11:52.142Z"
 last_activity: 2026-03-06 — Ember skeleton verified on live camera + upload mode on device; all 4 success criteria confirmed
 progress:
   total_phases: 9
   completed_phases: 0
   total_plans: 4
-  completed_plans: 1
+  completed_plans: 2
   percent: 44
 ---
 
@@ -65,6 +65,7 @@ Progress: [████░░░░░░] 44% (4 of 9 phases complete)
 | Phase 04-pose-detection P03 | 2 | 2 tasks | 2 files |
 | Phase 04-pose-detection P04 | - | verification | 0 files |
 | Phase 05-handstand-detection-timer P01 | 3 | 2 tasks | 3 files |
+| Phase 05-handstand-detection-timer P02 | 4 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -106,6 +107,8 @@ Recent decisions affecting current work:
 - [Phase 05-handstand-detection-timer]: Lenient 1+1 joint check (min wrist Y < max ankle Y) used for handstand classifier — 4-joint requirement explicitly rejected per CONTEXT.md
 - [Phase 05-handstand-detection-timer]: Entry debounce = 5 frames, exit debounce = 12 frames for HoldStateMachine — within CONTEXT.md specified ranges
 - [Phase 05-handstand-detection-timer]: Hold timestamps backdated: start = first inverted frame, end = first non-inverted frame; upload mode uses CMTime delta not wall clock
+- [Phase 05-handstand-detection-timer]: indicatorPref @ObservedObject shared from LiveSessionView into SessionConfigSheet — HomeView passes fresh DetectionIndicatorPreference() since same UserDefaults key persists
+- [Phase 05-handstand-detection-timer]: XcodeGen regeneration required when adding new Swift files — .xcodeproj is generated not hand-edited; xcodegen generate must be run as part of any file addition
 
 ### Pending Todos
 
@@ -120,6 +123,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-07T14:03:27.548Z
-Stopped at: Completed 05-handstand-detection-timer-01-PLAN.md
+Last session: 2026-03-07T14:11:52.140Z
+Stopped at: Completed 05-handstand-detection-timer-02-PLAN.md
 Resume file: None
