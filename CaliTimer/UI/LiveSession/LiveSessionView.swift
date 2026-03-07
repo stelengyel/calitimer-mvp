@@ -12,12 +12,23 @@ struct LiveSessionView: View {
     // Skeleton overlay preference — shared with SessionConfigSheet
     @StateObject private var skeletonPref = SkeletonPreference()
 
+    // Hold state machine — drives indicator dot and timer display
+    @StateObject private var holdStateMachine = HoldStateMachine()
+
+    // Detection indicator visibility preference — shared with SessionConfigSheet and Settings
+    @StateObject private var indicatorPref = DetectionIndicatorPreference()
+
     // Drives SkeletonOverlayView re-renders — updated via onReceive below
     @State private var detectedJoints: [String: CGPoint] = [:]
 
     // Session config passed from HomeView via AppCoordinator (or stored there)
     var sessionSkill: String = "Handstand"
     var sessionTargetDuration: TimeInterval? = nil
+
+    private var targetReached: Bool {
+        guard let target = holdStateMachine.targetDuration else { return false }
+        return holdStateMachine.displayedElapsed >= target && holdStateMachine.state == .timing
+    }
 
     var body: some View {
         ZStack {
@@ -41,6 +52,22 @@ struct LiveSessionView: View {
 
             // Layer 1: Overlaid controls
             VStack {
+                // Detection indicator + timer cluster — top-center, above flip button row
+                if indicatorPref.isEnabled {
+                    HStack {
+                        Spacer()
+                        VStack(spacing: 4) {
+                            HoldIndicatorView(state: holdStateMachine.state)
+                            HoldTimerView(
+                                elapsed: holdStateMachine.displayedElapsed,
+                                targetReached: targetReached
+                            )
+                        }
+                        .padding(.top, 64)  // clear safe area / notch
+                        Spacer()
+                    }
+                }
+
                 // Top row: flip button (top-right)
                 HStack {
                     Spacer()
@@ -91,6 +118,7 @@ struct LiveSessionView: View {
         .toolbar(.hidden, for: .navigationBar)
         .task {
             // startSession() is @MainActor async — hops to background queue for startRunning()
+            holdStateMachine.targetDuration = sessionTargetDuration
             await cameraManager.startSession()
         }
         .onDisappear {
@@ -120,11 +148,16 @@ struct LiveSessionView: View {
                     y: 1.0 - layerPoint.y / bounds.height
                 )
             }
+            // Wave 0 verification: confirm actual Vision joint key strings (remove after verified)
+            HandstandClassifier.debugPrintKeys(pose)
+            // Process pose through state machine
+            holdStateMachine.process(pose: pose)
         }
         .sheet(isPresented: $showingConfigSheet) {
-            SessionConfigSheet(skeletonPref: skeletonPref) { skill, targetDuration in
+            SessionConfigSheet(skeletonPref: skeletonPref, indicatorPref: indicatorPref) { skill, targetDuration in
                 // Mid-session config update — session already created; just update in-memory
                 // Full session mutation deferred to Phase 6 when holds relationship exists
+                holdStateMachine.targetDuration = targetDuration
             }
             .presentationDetents([.medium])
         }

@@ -8,6 +8,10 @@ struct SessionConfigSheet: View {
     /// When opened from HomeView (no shared instance), caller passes a fresh SkeletonPreference.
     @ObservedObject var skeletonPref: SkeletonPreference
 
+    /// Detection indicator preference — passed from LiveSessionView so both share the same instance.
+    /// When opened from HomeView (no shared instance), caller passes a fresh DetectionIndicatorPreference.
+    @ObservedObject var indicatorPref: DetectionIndicatorPreference
+
     /// Called when athlete taps Go. HomeView uses this to create Session + navigate.
     /// LiveSessionView uses this to update in-progress session config.
     let onConfirm: (_ skill: String, _ targetDuration: TimeInterval?) -> Void
@@ -94,6 +98,27 @@ struct SessionConfigSheet: View {
                     }
                     Spacer()
                     Toggle("", isOn: $skeletonPref.isEnabled)
+                        .tint(Color.brandEmber)
+                        .labelsHidden()
+                }
+                .padding(.horizontal, 24)
+                .padding(.vertical, 20)
+
+                Divider()
+                    .background(Color.textSecondary.opacity(0.15))
+
+                // Detection indicator toggle row — same pattern as skeleton overlay
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Detection Indicator")
+                            .font(.mono(12))
+                            .foregroundStyle(Color.textSecondary)
+                        Text("Show hold state dot on camera")
+                            .font(.mono(11))
+                            .foregroundStyle(Color.textSecondary.opacity(0.6))
+                    }
+                    Spacer()
+                    Toggle("", isOn: $indicatorPref.isEnabled)
                         .tint(Color.brandEmber)
                         .labelsHidden()
                 }

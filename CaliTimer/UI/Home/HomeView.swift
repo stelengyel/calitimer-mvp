@@ -75,7 +75,7 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showingConfigSheet) {
-            SessionConfigSheet(skeletonPref: skeletonPref) { skill, targetDuration in
+            SessionConfigSheet(skeletonPref: skeletonPref, indicatorPref: DetectionIndicatorPreference()) { skill, targetDuration in
                 let session = Session(skill: skill, targetDuration: targetDuration)
                 modelContext.insert(session)
                 coordinator.navigate(to: .liveSession)
