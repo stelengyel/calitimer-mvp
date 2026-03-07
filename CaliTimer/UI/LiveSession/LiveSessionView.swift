@@ -148,8 +148,11 @@ struct LiveSessionView: View {
                     y: 1.0 - layerPoint.y / bounds.height
                 )
             }
-            // Wave 0 verification: confirm actual Vision joint key strings (remove after verified)
+            // Wave 0 verification: confirm actual Vision joint key strings
+            // Guarded behind #if DEBUG — removed from release builds after key strings empirically verified
+            #if DEBUG
             HandstandClassifier.debugPrintKeys(pose)
+            #endif
             // Process pose through state machine
             holdStateMachine.process(pose: pose)
         }
