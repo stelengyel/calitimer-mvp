@@ -15,7 +15,7 @@ HoldStateMachine, live timer, detection state indicator, target alert (audio), t
 
 ### Handstand Classifier
 
-- **Primary criterion:** At least 1 wrist AND 1 ankle detected with confidence > 0.2, where wrist Y < ankle Y in Vision normalized space (wrists above ankles = inverted)
+- **Primary criterion:** At least 1 wrist AND 1 ankle detected with confidence > 0.2, where wrist Y < ankle Y in Vision normalized space (wrists below ankles = inverted)
 - **Minimum joints:** 1 wrist + 1 ankle (lenient — supports side-on camera angles). Flagged as tunable: this threshold is empirically determined and likely to be adjusted during testing
 - **Stricter criteria (NOT used):** Requiring all 4 joints (both wrists + both ankles) or additional body alignment was rejected in favor of side-on angle support
 
@@ -107,7 +107,7 @@ HoldStateMachine, live timer, detection state indicator, target alert (audio), t
 <deferred>
 ## Deferred Ideas
 
-- None — discussion stayed within phase scope
+- Using joint angles (e.g. feet-hips-wrists) in handstand criteria for stricter hold definition. This is something we might implement at a later date if necessary.
 
 </deferred>
 

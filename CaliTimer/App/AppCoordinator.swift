@@ -5,6 +5,7 @@ import SwiftUI
 final class AppCoordinator {
     var path = NavigationPath()
     var isDrawerOpen = false
+    var pendingTargetDuration: TimeInterval? = nil
 
     enum Destination: Hashable {
         case history

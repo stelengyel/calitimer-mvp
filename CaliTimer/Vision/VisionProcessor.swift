@@ -47,54 +47,48 @@ final class VisionProcessor: ObservableObject {
     // MARK: - Processing
 
     /// Process a single camera frame for human body pose.
-    /// nonisolated — called from AVCaptureVideoDataOutputSampleBufferDelegate on a background thread.
+    /// nonisolated — called from AVCaptureVideoDataOutputSampleBufferDelegate on a background thread,
+    /// or from AVAssetReaderScanner on a Task background thread.
+    /// Returns the detected pose synchronously so callers that need it immediately (e.g. scanner)
+    /// can use it without a MainActor round-trip. Also publishes to $detectedPose for UI subscribers.
     /// Outputs normalized Vision coords in raw sensor space (landscape for camera, display-space for video).
     /// Callers are responsible for remapping coords to their view coordinate space.
+    @discardableResult
     nonisolated func process(sampleBuffer: CMSampleBuffer,
-                             orientation: CGImagePropertyOrientation = .up) {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+                             orientation: CGImagePropertyOrientation = .up) -> DetectedPose? {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return nil }
         let request = VNDetectHumanBodyPoseRequest()
 
         do {
             try requestHandler.perform([request], on: pixelBuffer, orientation: orientation)
         } catch {
-            // Failed to perform request — publish nil and return
             print("[Vision] perform error: \(error)")
-            Task { @MainActor in
-                self.detectedPose = nil
-            }
-            return
+            Task { @MainActor in self.detectedPose = nil }
+            return nil
         }
 
         guard let observations = request.results, let observation = observations.first else {
-            Task { @MainActor in
-                self.detectedPose = nil
-            }
-            return
+            Task { @MainActor in self.detectedPose = nil }
+            return nil
         }
 
         var joints: [String: CGPoint] = [:]
 
         for jointName in Self.jointsOfInterest {
             guard let point = try? observation.recognizedPoint(jointName),
-                  point.confidence > 0.2 else {
+                  point.confidence > 0.1 else {
                 continue
             }
             joints[jointName.rawValue.rawValue] = point.location
         }
 
         guard !joints.isEmpty else {
-            Task { @MainActor in
-                self.detectedPose = nil
-            }
-            return
+            Task { @MainActor in self.detectedPose = nil }
+            return nil
         }
 
         let pose = DetectedPose(joints: joints)
-        print("[Vision] detected \(joints.count) joints")
-
-        Task { @MainActor in
-            self.detectedPose = pose
-        }
+        Task { @MainActor in self.detectedPose = pose }
+        return pose
     }
 }

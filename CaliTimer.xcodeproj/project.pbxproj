@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -46,7 +46,7 @@
 		0A7CE6930C77358EF084B69A /* SkillPersonalBest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillPersonalBest.swift; sourceTree = "<group>"; };
 		0E29A3E3CFB2B4370B20AA8B /* HandstandClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandstandClassifier.swift; sourceTree = "<group>"; };
 		2428E4E5C3805315A482B8AE /* HoldStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldStateMachine.swift; sourceTree = "<group>"; };
-		25F59B64677742565EE7B124 /* CaliTimer.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CaliTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		25F59B64677742565EE7B124 /* CaliTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaliTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D6DB5183C51854F49EED4E7 /* SessionConfigSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionConfigSheet.swift; sourceTree = "<group>"; };
 		2E1B651E95750212F3AA3E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		422028AD275B4663E59FBF41 /* HoldTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldTimerView.swift; sourceTree = "<group>"; };
@@ -298,7 +298,6 @@
 			);
 			mainGroup = C49E6BB2A8E1B44F50FE8B2C;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -424,6 +423,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UFGH7H2T8U;
 				INFOPLIST_FILE = CaliTimer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -508,6 +508,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UFGH7H2T8U;
 				INFOPLIST_FILE = CaliTimer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (

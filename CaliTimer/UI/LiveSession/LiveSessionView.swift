@@ -21,10 +21,6 @@ struct LiveSessionView: View {
     // Drives SkeletonOverlayView re-renders — updated via onReceive below
     @State private var detectedJoints: [String: CGPoint] = [:]
 
-    // Session config passed from HomeView via AppCoordinator (or stored there)
-    var sessionSkill: String = "Handstand"
-    var sessionTargetDuration: TimeInterval? = nil
-
     private var targetReached: Bool {
         guard let target = holdStateMachine.targetDuration else { return false }
         return holdStateMachine.displayedElapsed >= target && holdStateMachine.state == .timing
@@ -117,8 +113,10 @@ struct LiveSessionView: View {
         }
         .toolbar(.hidden, for: .navigationBar)
         .task {
-            // startSession() is @MainActor async — hops to background queue for startRunning()
-            holdStateMachine.targetDuration = sessionTargetDuration
+            // Consume target set in pre-session config sheet.
+            // coordinator.pendingTargetDuration is nil if no target was set (or if navigated without config).
+            holdStateMachine.targetDuration = coordinator.pendingTargetDuration
+            coordinator.pendingTargetDuration = nil
             await cameraManager.startSession()
         }
         .onDisappear {

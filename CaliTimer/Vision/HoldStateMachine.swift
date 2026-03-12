@@ -133,6 +133,11 @@ final class HoldStateMachine: ObservableObject {
                 exitFrameCount = 0
                 potentialEnd = nil
                 potentialEndVideoTime = nil
+                // Upload mode: update displayed elapsed using video timestamps each frame.
+                // Live mode uses the wall-clock Timer instead (started by confirmEntry).
+                if let startVT = potentialStartVideoTime, let curVT = currentVideoTime {
+                    displayedElapsed = max(0, CMTimeGetSeconds(curVT) - CMTimeGetSeconds(startVT))
+                }
             } else {
                 // First or subsequent non-inverted frame — start exit debounce
                 if potentialEnd == nil {
@@ -170,7 +175,11 @@ final class HoldStateMachine: ObservableObject {
         exitFrameCount = 0
         potentialEnd = nil
         potentialEndVideoTime = nil
-        startTimer()
+        // Upload mode uses CMTime-based elapsed updated per-frame in process().
+        // Wall-clock timer is only meaningful for live sessions.
+        if currentVideoTime == nil {
+            startTimer()
+        }
     }
 
     private func confirmExit() {

@@ -78,6 +78,7 @@ struct HomeView: View {
             SessionConfigSheet(skeletonPref: skeletonPref, indicatorPref: DetectionIndicatorPreference()) { skill, targetDuration in
                 let session = Session(skill: skill, targetDuration: targetDuration)
                 modelContext.insert(session)
+                coordinator.pendingTargetDuration = targetDuration
                 coordinator.navigate(to: .liveSession)
             }
             .presentationDetents([.medium])

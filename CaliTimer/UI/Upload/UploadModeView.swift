@@ -19,7 +19,7 @@ struct UploadModeView: View {
                     VideoPlayerView(player: player)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                    // Skeleton overlay on top of video (during scan and playback)
+                    // Skeleton overlay — driven by the periodic time observer (same as live mode).
                     if skeletonPref.isEnabled {
                         GeometryReader { geo in
                             SkeletonOverlayView(joints: detectedJoints, viewSize: geo.size)
@@ -27,8 +27,8 @@ struct UploadModeView: View {
                         .allowsHitTesting(false)
                     }
 
-                    // Detection indicator + timer overlay (shown during scan)
-                    if manager.isScanning && indicatorPref.isEnabled {
+                    // Detection indicator + timer — same UI as live camera mode.
+                    if indicatorPref.isEnabled {
                         VStack {
                             VStack(spacing: 4) {
                                 HoldIndicatorView(state: holdStateMachine.state)
@@ -41,20 +41,6 @@ struct UploadModeView: View {
                             Spacer()
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
-
-                    // Zone 3: holds results (shown after scan completes)
-                    // Per Phase 3 stability contract: this is inner content only — outer ZStack unchanged
-                    if !manager.isScanning {
-                        VStack {
-                            Spacer()
-                            holdsResultsView
-                                .frame(maxWidth: .infinity)
-                                .background(.ultraThinMaterial)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                                .padding(.horizontal, 12)
-                                .padding(.bottom, 16)
-                        }
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -87,16 +73,16 @@ struct UploadModeView: View {
         .sheet(isPresented: $showPicker) {
             PHPickerSheet(isPresented: $showPicker, manager: manager)
         }
-        // Trigger scan automatically when a new video is imported
+        // Reset state machine when a new video is imported.
         .onChange(of: manager.videoURL) { _, newURL in
             if newURL != nil {
-                manager.startScan(holdStateMachine: holdStateMachine)
+                holdStateMachine.resetForNewScan()
             }
         }
-        .onDisappear {
-            manager.cancelScan()
-        }
+        // Drive skeleton + state machine from the periodic time observer (real-time, same as live mode).
+        // No fast scan — the AVPlayerItemVideoOutput fires at ~30fps during playback.
         .onReceive(manager.visionProcessor.$detectedPose) { pose in
+            holdStateMachine.process(pose: pose)
             guard let joints = pose?.joints, !joints.isEmpty,
                   overlaySize.width > 0, manager.videoDisplaySize.width > 0 else {
                 detectedJoints = [:]
@@ -113,42 +99,6 @@ struct UploadModeView: View {
                 let oy = vr.minY + (1.0 - pt.y) * vr.height
                 return CGPoint(x: ox / s.width, y: 1.0 - oy / s.height)
             }
-        }
-    }
-
-    // MARK: - Zone 3: Holds Results
-
-    @ViewBuilder
-    private var holdsResultsView: some View {
-        if holdStateMachine.completedHolds.isEmpty && manager.videoURL != nil {
-            // Empty state — shown after scan completes with no holds
-            Text("No handstand holds detected")
-                .font(.mono(14))
-                .foregroundStyle(Color.textSecondary.opacity(0.7))
-                .padding(.vertical, 16)
-                .frame(maxWidth: .infinity)
-        } else if !holdStateMachine.completedHolds.isEmpty {
-            // Results list — scrollable, max 3 rows visible before scroll
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    ForEach(Array(holdStateMachine.completedHolds.enumerated()), id: \.element.id) { index, hold in
-                        HStack {
-                            Text("\(index + 1). \(hold.formattedStart()) - \(hold.formattedEnd()) — \(Int(hold.duration))s")
-                                .font(.mono(13))
-                                .foregroundStyle(Color.textPrimary)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 10)
-                            Spacer()
-                        }
-                        if index < holdStateMachine.completedHolds.count - 1 {
-                            Divider()
-                                .background(Color.textSecondary.opacity(0.15))
-                                .padding(.leading, 16)
-                        }
-                    }
-                }
-            }
-            .frame(maxHeight: 150)  // 3 rows approx; scrollable beyond that
         }
     }
 

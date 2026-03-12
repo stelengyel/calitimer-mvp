@@ -62,16 +62,16 @@ enum AVAssetReaderScanner {
 
             let pts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
 
-            // Vision process is nonisolated — call directly (same pattern as live camera path)
-            visionProcessor.process(sampleBuffer: sampleBuffer, orientation: pixelOrientation)
+            // process() is nonisolated and returns the pose synchronously.
+            // Using the return value directly eliminates the MainActor round-trip race:
+            // the old pattern read visionProcessor.detectedPose after an await MainActor.run,
+            // but the Task { @MainActor in self.detectedPose = pose } inside process() may not
+            // have run yet, causing the state machine to always see the previous frame's pose.
+            let pose = visionProcessor.process(sampleBuffer: sampleBuffer, orientation: pixelOrientation)
 
-            // Bridge detected pose + video time to MainActor for state machine
-            // Use the pose already published by visionProcessor
-            // NOTE: There is a 1-frame lag because process() dispatches to MainActor via Task.
-            // For upload mode accuracy this is acceptable — scan is not realtime.
             await MainActor.run {
                 holdStateMachine.currentVideoTime = pts
-                holdStateMachine.process(pose: visionProcessor.detectedPose)
+                holdStateMachine.process(pose: pose)
             }
         }
 
