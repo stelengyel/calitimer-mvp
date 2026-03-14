@@ -113,7 +113,7 @@ struct SessionConfigSheet: View {
                         Text("Detection Indicator")
                             .font(.mono(12))
                             .foregroundStyle(Color.textSecondary)
-                        Text("Show hold state dot on camera")
+                        Text("Show glow border and hold timer on camera")
                             .font(.mono(11))
                             .foregroundStyle(Color.textSecondary.opacity(0.6))
                     }

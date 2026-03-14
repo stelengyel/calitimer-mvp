@@ -9,6 +9,11 @@ struct LiveSessionView: View {
     @StateObject private var cameraManager = CameraManager()
     @State private var showingConfigSheet = false
 
+    // Completed hold result overlay state
+    @State private var showResult = false
+    @State private var resultDuration: TimeInterval = 0
+    @State private var resultDismissTask: Task<Void, Never>?
+
     // Skeleton overlay preference — shared with SessionConfigSheet
     @StateObject private var skeletonPref = SkeletonPreference()
 
@@ -46,24 +51,14 @@ struct LiveSessionView: View {
                 .allowsHitTesting(false)
             }
 
-            // Layer 1: Overlaid controls
-            VStack {
-                // Detection indicator + timer cluster — top-center, above flip button row
-                if indicatorPref.isEnabled {
-                    HStack {
-                        Spacer()
-                        VStack(spacing: 4) {
-                            HoldIndicatorView(state: holdStateMachine.state)
-                            HoldTimerView(
-                                elapsed: holdStateMachine.displayedElapsed,
-                                targetReached: targetReached
-                            )
-                        }
-                        .padding(.top, 64)  // clear safe area / notch
-                        Spacer()
-                    }
-                }
+            // Layer 1: Screen-edge glow border — replaces the indicator dot
+            if indicatorPref.isEnabled {
+                DetectionBorderView(state: holdStateMachine.state)
+                    .allowsHitTesting(false)
+            }
 
+            // Layer 2: Overlaid controls
+            VStack {
                 // Top row: flip button (top-right)
                 HStack {
                     Spacer()
@@ -76,9 +71,25 @@ struct LiveSessionView: View {
                             .padding(12)
                             .background(.ultraThinMaterial, in: Circle())
                     }
-                    .padding(.top, 60)
+                    .padding(.top, 56)
                     .padding(.trailing, 20)
                 }
+
+                // Live timer — centred, visible only during active hold
+                Group {
+                    if indicatorPref.isEnabled && holdStateMachine.state == .timing {
+                        HoldTimerView(
+                            elapsed: holdStateMachine.displayedElapsed,
+                            targetReached: targetReached
+                        )
+                        .transition(.asymmetric(
+                            insertion: .scale(scale: 0.85).combined(with: .opacity),
+                            removal: .opacity
+                        ))
+                    }
+                }
+                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: holdStateMachine.state == .timing)
+                .padding(.top, 8)
 
                 Spacer()
 
@@ -109,6 +120,13 @@ struct LiveSessionView: View {
                     .padding(.trailing, 24)
                     .padding(.bottom, 48)
                 }
+            }
+
+            // Layer 3: Completed hold result — topmost, no scrim
+            if showResult {
+                HoldResultOverlay(duration: resultDuration)
+                    .transition(.scale(scale: 0.80).combined(with: .opacity))
+                    .onTapGesture { dismissResult() }
             }
         }
         .toolbar(.hidden, for: .navigationBar)
@@ -154,6 +172,10 @@ struct LiveSessionView: View {
             // Process pose through state machine
             holdStateMachine.process(pose: pose)
         }
+        .onChange(of: holdStateMachine.completedHolds.count) { _, _ in
+            guard let last = holdStateMachine.completedHolds.last else { return }
+            presentResult(duration: last.duration)
+        }
         .sheet(isPresented: $showingConfigSheet) {
             SessionConfigSheet(skeletonPref: skeletonPref, indicatorPref: indicatorPref) { skill, targetDuration in
                 // Mid-session config update — session already created; just update in-memory
@@ -161,6 +183,32 @@ struct LiveSessionView: View {
                 holdStateMachine.targetDuration = targetDuration
             }
             .presentationDetents([.medium])
+        }
+    }
+
+    // MARK: - Hold Result
+
+    private func presentResult(duration: TimeInterval) {
+        resultDuration = duration
+        resultDismissTask?.cancel()
+        if !showResult {
+            withAnimation(.spring(response: 0.25, dampingFraction: 0.55)) {
+                showResult = true
+            }
+        }
+        resultDismissTask = Task { @MainActor in
+            try? await Task.sleep(for: .seconds(2.0))
+            guard !Task.isCancelled else { return }
+            withAnimation(.easeIn(duration: 0.5)) {
+                showResult = false
+            }
+        }
+    }
+
+    private func dismissResult() {
+        resultDismissTask?.cancel()
+        withAnimation(.easeIn(duration: 0.3)) {
+            showResult = false
         }
     }
 

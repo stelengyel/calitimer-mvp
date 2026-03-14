@@ -10,6 +10,8 @@
 		0474D9B4E67C1B9A59A72362 /* VisionProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC421C9F8BA71FA7BD3669D /* VisionProcessor.swift */; };
 		109771AAD7A50F4668A4FBC8 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB3272524DA2FC68D1D6861 /* CameraManager.swift */; };
 		17BED22F0211DD1CE67260A5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D39DCB259B6EB56E5EC94AB /* HomeView.swift */; };
+				5C5A15A62FC849E2BA6533A5 /* DetectionBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F92A85326C413392D509F1 /* DetectionBorderView.swift */; };
+		3A5B060452AF4A17817EC711 /* HoldResultOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA524D9F39AF43DF8A38CE5F /* HoldResultOverlay.swift */; };
 		21C9A2F4E4F788C1B4A0ED2D /* HoldTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422028AD275B4663E59FBF41 /* HoldTimerView.swift */; };
 		3596F820A12E90EB45518F3A /* BrandColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C9F76F23D3372B00BAB94D /* BrandColors.swift */; };
 		39EF44E01074F5ED99976E4D /* BrandFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529E9BE3E0C0E92F0C70936 /* BrandFonts.swift */; };
@@ -49,6 +51,8 @@
 		25F59B64677742565EE7B124 /* CaliTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaliTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D6DB5183C51854F49EED4E7 /* SessionConfigSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionConfigSheet.swift; sourceTree = "<group>"; };
 		2E1B651E95750212F3AA3E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+				F2F92A85326C413392D509F1 /* DetectionBorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionBorderView.swift; sourceTree = "<group>"; };
+		AA524D9F39AF43DF8A38CE5F /* HoldResultOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldResultOverlay.swift; sourceTree = "<group>"; };
 		422028AD275B4663E59FBF41 /* HoldTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldTimerView.swift; sourceTree = "<group>"; };
 		515D92EC8A55029DB719BC95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54D4267026132D87F55DB2A5 /* DrawerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerView.swift; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 			isa = PBXGroup;
 			children = (
 				D7B54F20B2E007B07353AF1E /* CameraPreviewView.swift */,
+								F2F92A85326C413392D509F1 /* DetectionBorderView.swift */,
+				AA524D9F39AF43DF8A38CE5F /* HoldResultOverlay.swift */,
 				6D2AD8910E50EC6FBC07522A /* HoldIndicatorView.swift */,
 				422028AD275B4663E59FBF41 /* HoldTimerView.swift */,
 				A4BC430DA8BD91DECD30D166 /* LiveSessionView.swift */,
@@ -339,6 +345,8 @@
 				6FC1B68A4E39AB8F7D216F3C /* Hold.swift in Sources */,
 				D98F4DDFF4FD03EB2096C9B4 /* HoldIndicatorView.swift in Sources */,
 				FAD71C1B62C94A950A670195 /* HoldStateMachine.swift in Sources */,
+								5C5A15A62FC849E2BA6533A5 /* DetectionBorderView.swift in Sources */,
+				3A5B060452AF4A17817EC711 /* HoldResultOverlay.swift in Sources */,
 				21C9A2F4E4F788C1B4A0ED2D /* HoldTimerView.swift in Sources */,
 				17BED22F0211DD1CE67260A5 /* HomeView.swift in Sources */,
 				5F781B573203995E6B481BC7 /* LiveSessionView.swift in Sources */,

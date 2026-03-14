@@ -9,9 +9,9 @@ struct HoldTimerView: View {
 
     var body: some View {
         Text(formattedElapsed(elapsed))
-            .font(.system(size: 28, weight: .semibold, design: .monospaced))
+            .font(.system(size: 44, weight: .bold, design: .monospaced))
             .foregroundStyle(targetReached ? Color.green : Color.white)
-            .shadow(color: .black.opacity(0.5), radius: 2, x: 0, y: 1)
+            .shadow(color: .black.opacity(0.7), radius: 4, x: 0, y: 1)
     }
 
     private func formattedElapsed(_ seconds: TimeInterval) -> String {
